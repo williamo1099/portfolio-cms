@@ -11,18 +11,30 @@ class ProjectForm extends Form
 {
     use WithFileUploads;
 
+    public ?int $id = null;
+
     #[Validate(['required', 'in:personal,professional'])]
     public string $type = '';
 
     #[Validate(['required', 'min:3'])]
     public string $title = '';
 
-    public string $stacks = '';
+    public ?string $stacks = '';
 
-    public string $description = '';
+    public ?string $description = '';
 
     #[Validate('nullable', 'image', 'max:1024')]
     public $image;
+
+    public function setProject(Project $project)
+    {
+        $this->id = $project->id;
+        $this->type = $project->type;
+        $this->title = $project->title;
+        $this->stacks = implode(', ', json_decode($project->stacks, true));
+        $this->description = $project->description;
+        $this->image = $project->image_path;
+    }
 
     public function store()
     {

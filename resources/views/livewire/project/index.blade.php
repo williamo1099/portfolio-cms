@@ -1,5 +1,4 @@
 <div class="d-flex flex-column gap-2">
-    {{--  --}}
     <div class="d-flex justify-content-between">
         <h3 class="fw-bold">Projects</h3>
 
@@ -14,6 +13,7 @@
                 <th>Title</th>
                 <th>Stacks</th>
                 <th>Description</th>
+                <th>Actions</th> <!-- New Column for Actions -->
             </tr>
         </thead>
         <tbody>
@@ -23,6 +23,10 @@
                     <td>{{ $project->title }}</td>
                     <td>{{ implode(', ', json_decode($project->stacks, true)) }}</td>
                     <td>{{ $project->description }}</td>
+                    <td>
+                        <!-- Edit Button -->
+                        <a href="{{ route('projects.update', $project) }}" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
                 </tr>
             @empty
                 <tr>

@@ -1,8 +1,18 @@
 <div class="d-flex flex-column gap-2">
-    {{--  --}}
-    <h3 class="fw-bold">Create a New Project</h3>
+    <h3 class="fw-bold">
+        @if ($form->id)
+            Update Project
+        @else
+            Create a New Project
+        @endif
+    </h3>
 
-    <form wire:submit="save">
+    <form wire:submit.prevent="save">
+        {{-- Hidden ID Field for Update --}}
+        @isset($project)
+            <input wire:model="form.id" type="hidden">
+        @endisset
+
         {{-- Type --}}
         <div class="mb-3">
             <label class="form-label">Type</label>
@@ -56,14 +66,23 @@
             @enderror
 
             {{-- Image Preview --}}
-            @if ($form->image)
+            @if ($form->image && is_object($form->image))
                 <div class="mt-2">
                     <img src="{{ $form->image->temporaryUrl() }}" class="img-thumbnail" width="150">
+                </div>
+            @elseif ($form->image)
+                <div class="mt-2">
+                    <img src="{{ asset('storage/' . $form->image) }}" class="img-thumbnail" width="150">
                 </div>
             @endif
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">
+            @if ($form->id)
+                Update Project
+            @else
+                Create New Project
+            @endif
+        </button>
     </form>
-
 </div>
