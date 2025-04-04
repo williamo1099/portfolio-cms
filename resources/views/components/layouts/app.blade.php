@@ -17,7 +17,7 @@
     <x-navbar />
 
     {{-- Content --}}
-    <div class="p-3">
+    <div class="p-4">
         {{ $slot }}
     </div>
 
