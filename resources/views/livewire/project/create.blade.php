@@ -48,6 +48,21 @@
                 placeholder="Enter description"></textarea>
         </div>
 
+        {{-- Image --}}
+        <div class="mb-3">
+            <input type="file" wire:model="form.image">
+            @error('form.image')
+                <span class="error text-danger">{{ $message }}</span>
+            @enderror
+
+            {{-- Image Preview --}}
+            @if ($form->image)
+                <div class="mt-2">
+                    <img src="{{ $form->image->temporaryUrl() }}" class="img-thumbnail" width="150">
+                </div>
+            @endif
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 

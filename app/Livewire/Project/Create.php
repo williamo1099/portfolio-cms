@@ -4,9 +4,12 @@ namespace App\Livewire\Project;
 
 use App\Livewire\Forms\ProjectForm;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use WithFileUploads;
+
     public ProjectForm $form;
 
     public function render()
