@@ -3,6 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Project;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
@@ -26,6 +28,9 @@ class ProjectForm extends Form
     #[Validate('nullable', 'image', 'max:1024')]
     public $image;
 
+    /**
+     * Set current project (for update form).
+     */
     public function setProject(Project $project)
     {
         $this->id = $project->id;
@@ -36,19 +41,40 @@ class ProjectForm extends Form
         $this->image = $project->image_path;
     }
 
+    /**
+     * Store a new project.
+     */
     public function store()
     {
-        $validated = $this->validate();
-        $validated['stacks'] = json_encode(array_map('trim', explode(',', $this->stacks)));
-        if ($this->image) {
-            $validated['image_path'] = $this->image->store('projects', 'public');
+        try {
+            $validated = $this->validate();
+            $validated['stacks'] = json_encode(array_map('trim', explode(',', $this->stacks)));
+            if ($this->image) {
+                $validated['image_path'] = $this->image->store('projects', 'public');
+            }
+            Project::create($validated);
+            $this->reset();
+        } catch (Exception $ex) {
+            Log::error($ex);
         }
-        Project::create($validated);
-        $this->reset();
     }
 
+    /**
+     * Update an existing project.
+     */
     public function update()
     {
-        // TODO: Add update logic.
+        try {
+            $validated = $this->validate();
+            $validated['stacks'] = json_encode(array_map('trim', explode(',', $this->stacks)));
+            $project = Project::findOrFail($this->id);
+            if ($this->image instanceof \Illuminate\Http\UploadedFile) {
+                $validated['image_path'] = $this->image->store('projects', 'public');
+            }
+            $project->update($validated);
+            $this->reset();
+        } catch (Exception $ex) {
+            Log::error($ex);
+        }
     }
 }
