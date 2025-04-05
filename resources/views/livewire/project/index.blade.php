@@ -2,7 +2,8 @@
     <div class="d-flex justify-content-between">
         <h3 class="fw-bold">Projects</h3>
 
-        <a wire:navigate href="{{ route('projects.create') }}" role="button" class="btn btn-primary">+ Create New
+        <a wire:navigate href="{{ route('projects.create') }}" role="button" class="btn btn-primary text-white">+ Create
+            New
             Project</a>
     </div>
 
