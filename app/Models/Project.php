@@ -12,4 +12,15 @@ class Project extends Model
     protected $table = 'projects';
 
     protected $fillable = ['type', 'title', 'description', 'stacks', 'image_path'];
+
+    public function scopeOfType($query, $type = '')
+    {
+        // If there is no type passed, return all projects.
+        if ($type == '') {
+            return $query;
+        }
+
+        // Return projects of type = $type.
+        return $query->whereType($type);
+    }
 }

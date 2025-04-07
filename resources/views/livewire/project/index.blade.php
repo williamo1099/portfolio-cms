@@ -10,10 +10,12 @@
     {{-- Summary --}}
     <div class="d-flex justify-content-start gap-3">
         {{-- Professional --}}
-        <x-summary-card title="Number of Professional Projects" :text="$professionalCount" />
+        <x-summary-card title="Professional Projects" :text="$professionalCount" click="setTypeFilter('professional')"
+            :active="$this->isActive('professional')" />
 
         {{-- Personal Project --}}
-        <x-summary-card title="Number of Personal Projects" :text="$personalCount" />
+        <x-summary-card title="Personal Projects" :text="$personalCount" click="setTypeFilter('personal')"
+            :active="$this->isActive('personal')" />
     </div>
 
     {{-- Table --}}
