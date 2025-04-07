@@ -7,6 +7,16 @@
             Project</a>
     </div>
 
+    {{-- Summary --}}
+    <div class="d-flex justify-content-start gap-3">
+        {{-- Professional --}}
+        <x-summary-card title="Number of Professional Projects" :text="$professionalCount" />
+
+        {{-- Personal Project --}}
+        <x-summary-card title="Number of Personal Projects" :text="$personalCount" />
+    </div>
+
+    {{-- Table --}}
     <table class="table table-striped">
         <thead>
             <tr>
