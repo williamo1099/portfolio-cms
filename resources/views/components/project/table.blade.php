@@ -33,7 +33,7 @@
 
                 {{-- Status --}}
                 <td class="text-center">
-                    <span class="d-inline-block rounded-circle {{ true ? 'bg-success' : 'bg-danger' }}"
+                    <span class="d-inline-block rounded-circle {{ $project->is_active ? 'bg-success' : 'bg-danger' }}"
                         style="width: 10px; height: 10px;"></span>
                 </td>
 
