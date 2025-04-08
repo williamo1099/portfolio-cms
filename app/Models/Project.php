@@ -14,7 +14,7 @@ class Project extends Model
 
     protected $table = 'projects';
 
-    protected $fillable = ['type', 'title', 'description', 'stacks', 'image_path', 'is_active'];
+    protected $fillable = ['type', 'title', 'description', 'stacks', 'image_path'];
 
     /**
      * Convert stacks attribute to an array.

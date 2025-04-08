@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->json('stacks')->nullable();
             $table->string('image_path')->nullable();
-            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
