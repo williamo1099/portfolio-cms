@@ -2,7 +2,8 @@
     <div class="d-flex justify-content-between">
         <h3 class="fw-bold">Projects</h3>
 
-        <a wire:navigate href="{{ route('projects.create') }}" role="button" class="btn btn-primary text-white">+ Create
+        <a wire:navigate href="{{ route('projects.create') }}" role="button" class="btn btn-primary text-white"><i
+                class="bi bi-plus"></i> Create
             New
             Project</a>
     </div>
@@ -19,33 +20,5 @@
     </div>
 
     {{-- Table --}}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Title</th>
-                <th>Stacks</th>
-                <th>Description</th>
-                <th>Actions</th> <!-- New Column for Actions -->
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($projects as $project)
-                <tr>
-                    <td>{{ ucfirst($project->type) }}</td>
-                    <td>{{ $project->title }}</td>
-                    <td>{{ implode(', ', json_decode($project->stacks, true)) }}</td>
-                    <td>{{ $project->description }}</td>
-                    <td>
-                        <!-- Edit Button -->
-                        <a href="{{ route('projects.update', $project) }}" class="btn btn-sm btn-warning">Edit</a>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5" class="text-center">No projects found.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+    <x-project.table :projects="$projects" />
 </div>

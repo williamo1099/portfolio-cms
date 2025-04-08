@@ -17,7 +17,7 @@ class Index extends Component
         // Fetch projects filtered by type and ordered by newest first.
         $projects = Project::latest()
             ->ofType($this->typeFilter)
-            ->get();
+            ->paginate(10);
 
         // Count the number of projects by type.
         $projectCounts = Project::selectRaw('type, COUNT(*) AS total')
