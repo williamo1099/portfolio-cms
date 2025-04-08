@@ -1,40 +1,45 @@
 @props(['projects'])
 
-<table class="table table-striped align-middle">
+<table class="table table-striped table-hover align-middle">
     <thead>
         <tr>
             <th class="text-center" style="width: 10%">Actions</th>
             <th style="width: 2%"></th>
-            <th style="width: 25%">Title</th>
-            <th style="width: 35%">Stacks</th>
+            <th style="width: 30%">Title</th>
+            <th style="width: 25%">Stacks</th>
             <th>Description</th>
         </tr>
     </thead>
+
     <tbody>
         @forelse ($projects as $project)
-            <tr>
+            <tr class="{{ !$project->is_active ? 'table-danger' : '' }}">
                 {{-- Actions --}}
                 <td class="text-center">
                     {{-- Edit --}}
-                    <a href="{{ route('projects.update', $project) }}" class="btn btn-sm btn-warning">
+                    <a href="{{ route('projects.update', $project) }}" class="btn btn-sm btn-warning" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
 
                     {{-- Activate / Deactivate --}}
-                    <a href="{{ route('projects.update', $project) }}" class="btn btn-sm btn-warning">
-                        <i class="bi bi-toggle-on"></i>
-                    </a>
+                    <button class="btn btn-sm text-white {{ $project->is_active ? 'btn-danger' : 'bg-success' }}"
+                        title="{{ $project->is_active ? 'Deactivate' : 'Activate' }}"
+                        wire:click="toggleProjectStatus({{ $project->id }})">
+                        <i class="bi bi-toggle-{{ $project->is_active ? 'off' : 'on' }}"></i>
+                    </button>
 
                     {{-- Delete --}}
-                    <a href="#" class="btn btn-sm btn-danger">
+                    <button class="btn btn-sm btn-danger" title="Delete"
+                        wire:click="deleteProject({{ $project->id }})">
                         <i class="bi bi-trash"></i>
-                    </a>
+                    </button>
                 </td>
 
                 {{-- Status --}}
                 <td class="text-center">
-                    <span class="d-inline-block rounded-circle {{ true ? 'bg-success' : 'bg-danger' }}"
-                        style="width: 10px; height: 10px;"></span>
+                    <span class="d-inline-block rounded-circle {{ $project->is_active ? 'bg-success' : 'bg-danger' }}"
+                        style="width: 12px; height: 12px;"
+                        title="{{ $project->is_active ? 'Active' : 'Inactive' }}"></span>
                 </td>
 
                 {{-- Title --}}
@@ -42,11 +47,9 @@
                     {{ $project->title }}
 
                     {{-- Type badge --}}
-                    @if ($project->type === 'personal')
-                        <span class="badge text-bg-primary">Personal</span>
-                    @else
-                        <span class="badge text-bg-primary">Professional</span>
-                    @endif
+                    <span class="badge {{ $project->type === 'personal' ? 'text-bg-light' : 'text-bg-dark' }}">
+                        {{ ucwords($project->type) }}
+                    </span>
                 </td>
 
                 {{-- Stacks --}}

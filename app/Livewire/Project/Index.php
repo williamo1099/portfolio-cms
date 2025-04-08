@@ -33,7 +33,7 @@ class Index extends Component
      * Updates the current type filter.
      * If the selected type is already active, resets the filter.
      * 
-     * @param String $type
+     * @param string $type
      * @return void
      */
     public function setTypeFilter($type): void
@@ -49,10 +49,33 @@ class Index extends Component
     /**
      * Checks if the given type is the currently active filter.
      * 
-     * @param String $type
+     * @param string $type
      */
     public function isActive($type): bool
     {
         return $this->typeFilter === $type;
+    }
+
+    /** 
+     * Toggle the project active status.
+     * 
+     * @param int $projectId
+     */
+    public function toggleProjectStatus($projectId): bool
+    {
+        $project = Project::findOrFail($projectId);
+        $project->is_active = !$project->is_active;
+        return $project->save();
+    }
+
+    /**
+     * Delete the project.
+     * 
+     * @param int $projectId
+     */
+    public function deleteProject($projectId): bool
+    {
+        $project = Project::findOrFail($projectId);
+        return $project->delete();
     }
 }
