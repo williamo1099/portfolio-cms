@@ -21,8 +21,10 @@ class ProjectForm extends Form
     #[Validate(['required', 'min:3'])]
     public string $title = '';
 
+    #[Validate(['nullable'])]
     public ?string $stacks = '';
 
+    #[Validate(['nullable'])]
     public ?string $description = '';
 
     #[Validate('nullable', 'image', 'max:1024')]
@@ -48,11 +50,10 @@ class ProjectForm extends Form
     {
         try {
             $validated = $this->validate();
-            $validated['stacks'] = json_encode(array_map('trim', explode(',', $this->stacks)));
             if ($this->image) {
                 $validated['image_path'] = $this->image->store('projects', 'public');
             }
-            Project::create($validated);
+            app(\App\Services\ProjectService::class)->createProject($validated);
             $this->reset();
         } catch (Exception $ex) {
             Log::error($ex);
@@ -66,12 +67,10 @@ class ProjectForm extends Form
     {
         try {
             $validated = $this->validate();
-            $validated['stacks'] = json_encode(array_map('trim', explode(',', $this->stacks)));
-            $project = Project::findOrFail($this->id);
             if ($this->image instanceof \Illuminate\Http\UploadedFile) {
                 $validated['image_path'] = $this->image->store('projects', 'public');
             }
-            $project->update($validated);
+            app(\App\Services\ProjectService::class)->updateProject($this->id, $validated);
             $this->reset();
         } catch (Exception $ex) {
             Log::error($ex);

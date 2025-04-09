@@ -3,6 +3,7 @@
 namespace App\Livewire\Project;
 
 use App\Models\Project;
+use App\Services\ProjectService;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -12,17 +13,20 @@ class Index extends Component
 {
     public string $typeFilter = '';
 
+    protected ProjectService $service;
+
+    public function boot(ProjectService $service)
+    {
+        $this->service = $service;
+    }
+
     public function render()
     {
-        // Fetch projects filtered by type and ordered by newest first.
-        $projects = Project::latest()
-            ->ofType($this->typeFilter)
-            ->paginate(10);
+        // Get projects filtered by type and ordered by newest first.
+        $projects = $this->service->getProjects($this->typeFilter, 10);
 
         // Count the number of projects by type.
-        $projectCounts = Project::selectRaw('type, COUNT(*) AS total')
-            ->groupBy('type')
-            ->pluck('total', 'type');
+        $projectCounts = $this->service->getProjectCount();
         $professionalCount = $projectCounts['professional'] ?? 0;
         $personalCount = $projectCounts['personal'] ?? 0;
 
