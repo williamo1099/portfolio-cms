@@ -15,5 +15,8 @@
                 <x-nav-item :active="request()->routeIs('projects.*')" :href="route('projects.index')">Projects</x-nav-item>
             </ul>
         </div>
+
+        {{-- Logout button --}}
+        <livewire:auth.logout-button />
     </div>
 </nav>
