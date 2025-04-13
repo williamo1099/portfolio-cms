@@ -20,7 +20,9 @@ class LoginForm extends Form
     public bool $remember = false;
 
     /** 
+     * Validate the form data and attempt authentication.
      * 
+     * @return bool Returns true if authentication is successful, false otherwise.
      */
     public function login(): bool
     {

@@ -2,17 +2,28 @@
 
 namespace App\Livewire\Auth;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class LogoutButton extends Component
 {
-    public function render()
+    /**
+     * Render the logout button.
+     * 
+     * @return View
+     */
+    public function render(): View
     {
         return view('livewire.auth.logout-button');
     }
 
-    public function logout()
+    /**
+     * Handle user logout by invalidating the current session.
+     * 
+     * @return void
+     */
+    public function logout(): void
     {
         Auth::logout();
         session()->invalidate();
