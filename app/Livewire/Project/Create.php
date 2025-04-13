@@ -3,6 +3,8 @@
 namespace App\Livewire\Project;
 
 use App\Livewire\Forms\ProjectForm;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -12,15 +14,24 @@ class Create extends Component
 
     public ProjectForm $form;
 
-    public function render()
+    /**
+     * Render the project create view.
+     * 
+     * @return View
+     */
+    public function render(): View
     {
         return view('livewire.project.create');
     }
 
-    public function save()
+    /**
+     * Handle the create submit button click event.
+     * 
+     * @return void
+     */
+    public function save(): void
     {
         $this->form->store();
-
-        return $this->redirect(route('projects.index'));
+        redirect()->route('projects.index');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Project;
 
-use App\Models\Project;
 use App\Services\ProjectService;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -15,12 +15,24 @@ class Index extends Component
 
     protected ProjectService $service;
 
-    public function boot(ProjectService $service)
+    /**
+     * Boot the component and inject project service.
+     * 
+     * @param ProjectService $service
+     * @return void
+     */
+    public function boot(ProjectService $service): void
     {
+        // Initialize the service.
         $this->service = $service;
     }
 
-    public function render()
+    /**
+     * Render the project index view which includes the list of projects and their count.
+     * 
+     * @return View
+     */
+    public function render(): View
     {
         // Get projects filtered by type and ordered by newest first.
         $projects = $this->service->getProjects($this->typeFilter, 10);
@@ -34,8 +46,19 @@ class Index extends Component
     }
 
     /**
-     * Updates the current type filter.
-     * If the selected type is already active, resets the filter.
+     * Check if the given type is the currently active filter.
+     * 
+     * @param string $type
+     * @return bool
+     */
+    public function isActive($type): bool
+    {
+        return $this->typeFilter === $type;
+    }
+
+    /**
+     * Update the current type filter.
+     * If the selected type is already active, reset the filter.
      * 
      * @param string $type
      * @return void
@@ -50,36 +73,27 @@ class Index extends Component
         $this->typeFilter = $type;
     }
 
-    /**
-     * Checks if the given type is the currently active filter.
-     * 
-     * @param string $type
-     */
-    public function isActive($type): bool
-    {
-        return $this->typeFilter === $type;
-    }
-
     /** 
-     * Toggle the project active status.
+     * Toggle the active status of the project by its id.
+     * Delegates the operation to the project service.
      * 
      * @param int $projectId
+     * @return bool
      */
     public function toggleProjectStatus($projectId): bool
     {
-        $project = Project::findOrFail($projectId);
-        $project->is_active = !$project->is_active;
-        return $project->save();
+        return $this->service->toggleProjectStatus($projectId);
     }
 
     /**
-     * Delete the project.
+     * Delete the project by its id.
+     * Delegates the operation to the project service.
      * 
      * @param int $projectId
+     * @return bool
      */
     public function deleteProject($projectId): bool
     {
-        $project = Project::findOrFail($projectId);
-        return $project->delete();
+        return $this->service->deleteProject($projectId);
     }
 }
