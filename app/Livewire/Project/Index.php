@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Project;
 
+use App\Models\Project;
 use App\Services\ProjectService;
+use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -34,13 +37,25 @@ class Index extends Component
      */
     public function render(): View
     {
-        // Get projects filtered by type and ordered by newest first.
-        $projects = $this->service->getProjects($this->typeFilter, 10);
+        try {
+            // Get projects filtered by type and ordered by newest first.
+            $projects = $this->service->getProjects($this->typeFilter, 10);
 
-        // Count the number of projects by type.
-        $projectCounts = $this->service->getProjectCount();
-        $professionalCount = $projectCounts['professional'] ?? 0;
-        $personalCount = $projectCounts['personal'] ?? 0;
+            // Count the number of projects by type.
+            $projectCounts = $this->service->getProjectCount();
+            $professionalCount = $projectCounts['professional'] ?? 0;
+            $personalCount = $projectCounts['personal'] ?? 0;
+        } catch (Exception $ex) {
+            Log::error('Error fetching projects', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString(),
+            ]);
+
+            // Set fallback data.
+            $projects = [];
+            $professionalCount = 0;
+            $personalCount = 0;
+        }
 
         return view('livewire.project.index', compact('projects', 'professionalCount', 'personalCount'));
     }
@@ -82,7 +97,16 @@ class Index extends Component
      */
     public function toggleProjectStatus($projectId): bool
     {
-        return $this->service->toggleProjectStatus($projectId);
+        try {
+            $project = $this->service->toggleProjectStatus($projectId);
+            return $project instanceof Project;
+        } catch (Exception $ex) {
+            Log::error('Error toggling project status', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString(),
+            ]);
+            return false;
+        }
     }
 
     /**
@@ -94,6 +118,15 @@ class Index extends Component
      */
     public function deleteProject($projectId): bool
     {
-        return $this->service->deleteProject($projectId);
+        try {
+            $project = $this->service->deleteProject($projectId);
+            return $project instanceof Project;
+        } catch (Exception $ex) {
+            Log::error('Error deleting project', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString(),
+            ]);
+            return false;
+        }
     }
 }

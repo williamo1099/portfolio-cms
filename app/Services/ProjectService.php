@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\Project;
-use Exception;
-use Illuminate\Support\Facades\Log;
 
 class ProjectService
 {
@@ -17,47 +15,32 @@ class ProjectService
     public function getProjects(?string $type = '', ?int $perPage = null)
     {
         $query = Project::latest()->ofType($type);
-
         return $perPage ? $query->paginate($perPage) : $query->get();
     }
 
     /**
      * Count the number of projects by type.
+     * 
+     * @return array
      */
     public function getProjectCount(): array
     {
-        try {
-            return Project::selectRaw('type, COUNT(*) AS total')
-                ->groupBy('type')
-                ->pluck('total', 'type')
-                ->toArray();
-        } catch (Exception $ex) {
-            Log::error('Error fetching project count', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString()
-            ]);
-            return [];
-        }
+        return Project::selectRaw('type, COUNT(*) AS total')
+            ->groupBy('type')
+            ->pluck('total', 'type')
+            ->toArray();
     }
 
     /**
      * Create a new project.
      * 
      * @param array $data
+     * @return Project
      */
-    public function createProject(array $data): bool
+    public function createProject(array $data): Project
     {
-        try {
-            $data['stacks'] = json_encode(array_map('trim', explode(',', $data['stacks'])));
-            Project::create($data);
-            return true;
-        } catch (Exception $ex) {
-            Log::error('Error creating project', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString()
-            ]);
-            return false;
-        }
+        $data['stacks'] = json_encode(array_map('trim', explode(',', $data['stacks'])));
+        return Project::create($data);
     }
 
     /**
@@ -65,58 +48,40 @@ class ProjectService
      * 
      * @param int $projectId
      * @param array $data
+     * @return Project
      */
-    public function updateProject(int $projectId, array $data): bool
+    public function updateProject(int $projectId, array $data): Project
     {
-        try {
-            $project = Project::findOrFail($projectId);
-            $data['stacks'] = json_encode(array_map('trim', explode(',', $data['stacks'])));
-            return $project->update($data);
-        } catch (Exception $ex) {
-            Log::error('Error updating project', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString()
-            ]);
-            return false;
-        }
+        $project = Project::findOrFail($projectId);
+        $data['stacks'] = json_encode(array_map('trim', explode(',', $data['stacks'])));
+        $project->update($data);
+        return $project;
     }
 
     /**
      * Toggle the project active status.
      * 
      * @param int $projectId
+     * @return Project
      */
-    public function toggleProjectStatus(int $projectId): bool
+    public function toggleProjectStatus(int $projectId): Project
     {
-        try {
-            $project = Project::findOrFail($projectId);
-            $project->is_active = !$project->is_active;
-            return $project->save();
-        } catch (Exception $ex) {
-            Log::error('Error toggling project status', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
-            return false;
-        }
+        $project = Project::findOrFail($projectId);
+        $project->is_active = !$project->is_active;
+        $project->save();
+        return $project;
     }
 
     /**
      * Delete the project (soft delete).
      * 
      * @param int $projectId
+     * @return Project
      */
-    public function deleteProject(int $projectId): bool
+    public function deleteProject(int $projectId): Project
     {
-        try {
-            $project = Project::findOrFail($projectId);
-            return $project->delete();
-        } catch (Exception $ex) {
-            Log::error('Error deleting project', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
-            return false;
-        }
+        $project = Project::findOrFail($projectId);
+        $project->delete();
+        return $project;
     }
 }

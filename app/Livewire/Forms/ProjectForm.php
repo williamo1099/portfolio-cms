@@ -45,35 +45,51 @@ class ProjectForm extends Form
 
     /**
      * Store a new project.
+     * Delegates the operation to the project service.
      */
-    public function store()
+    public function store(): bool
     {
         try {
             $validated = $this->validate();
             if ($this->image) {
                 $validated['image_path'] = $this->image->store('projects', 'public');
             }
-            app(\App\Services\ProjectService::class)->createProject($validated);
+
+            $project = app(\App\Services\ProjectService::class)->createProject($validated);
             $this->reset();
+
+            return $project instanceof Project;
         } catch (Exception $ex) {
-            Log::error($ex);
+            Log::error('Error creating project', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString()
+            ]);
+            return false;
         }
     }
 
     /**
      * Update an existing project.
+     * Delegates the operation to the project service.
      */
-    public function update()
+    public function update(): bool
     {
         try {
             $validated = $this->validate();
             if ($this->image instanceof \Illuminate\Http\UploadedFile) {
                 $validated['image_path'] = $this->image->store('projects', 'public');
             }
-            app(\App\Services\ProjectService::class)->updateProject($this->id, $validated);
+
+            $project = app(\App\Services\ProjectService::class)->updateProject($this->id, $validated);
             $this->reset();
+
+            return $project instanceof Project;
         } catch (Exception $ex) {
-            Log::error($ex);
+            Log::error('Error updating project', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString()
+            ]);
+            return false;
         }
     }
 }
