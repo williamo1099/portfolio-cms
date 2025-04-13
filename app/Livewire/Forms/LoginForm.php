@@ -16,15 +16,22 @@ class LoginForm extends Form
     #[Validate('required')]
     public string $password = '';
 
+    #[Validate('required')]
+    public bool $remember = false;
+
     /** 
      * 
      */
     public function login(): bool
     {
         try {
-            $validated = $this->validate();
+            $this->validate();
+            $credentials = [
+                'email' => $this->email,
+                'password' => $this->password,
+            ];
 
-            if (Auth::attempt($validated)) {
+            if (Auth::attempt($credentials, $this->remember)) {
                 session()->regenerate();
                 return true;
             }

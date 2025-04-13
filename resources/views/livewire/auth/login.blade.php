@@ -3,7 +3,7 @@
         <div class="card-body">
             <h2 class="text-center mb-4">Login</h2>
 
-            <!-- Login Form -->
+            {{-- Form --}}
             <form wire:submit.prevent="login">
                 @error('authentication')
                     <div class="alert alert-danger" role="alert">
@@ -11,7 +11,7 @@
                     </div>
                 @enderror
 
-                <!-- Email Input -->
+                {{-- Email --}}
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
                     <input wire:model="form.email" type="email" class="form-control" id="email" name="email"
@@ -22,7 +22,7 @@
                     @enderror
                 </div>
 
-                <!-- Password Input -->
+                {{-- Password --}}
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input wire:model="form.password" type="password" class="form-control" id="password"
@@ -33,14 +33,18 @@
                     @enderror
                 </div>
 
-                <!-- Submit Button -->
-                <div class="mb-3 text-center">
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                {{-- Remember Me --}}
+                <div class="mb-3">
+                    <input wire:model="form.remember" type="checkbox" class="form-check-input" id="remember"
+                        name="password">
+                    <label class="form-check-label" for="remember">
+                        Remember me?
+                    </label>
                 </div>
 
-                <!-- Forgot Password Link -->
-                <div class="text-center">
-                    <a href="forgot-password.html">Forgot your password?</a>
+                {{-- Button --}}
+                <div class="mb-3 text-center">
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
                 </div>
             </form>
         </div>
