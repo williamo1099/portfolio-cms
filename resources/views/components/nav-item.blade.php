@@ -1,10 +1,9 @@
 @props(['active' => false, 'href' => '#'])
 
 @php
-    $classes = 'nav-link ' . ($active ? 'active' : '');
+    $classes =
+        'rounded-md px-3 py-2 text-sm font-medium transition ' .
+        ($active ? 'bg-primary text-white' : 'text-white hover:bg-primary');
 @endphp
 
-<li class="nav-item">
-    <a wire:navigate {{ $attributes->merge(['class' => $classes, 'href' => $href]) }}
-        href="#">{{ $slot }}</a>
-</li>
+<a wire:navigate {{ $attributes->merge(['class' => $classes, 'href' => $href]) }}>{{ $slot }}</a>

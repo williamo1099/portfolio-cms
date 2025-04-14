@@ -1,22 +1,15 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        {{-- App logo --}}
-        <a class="navbar-brand" href="{{ route('home.index') }}" wire:navigate>Portfolio CMS</a>
+<nav
+    class="flex flex-row px-4 py-3 justify-between top-0 sticky bg-primary/80 backdrop-blur backdrop-saturate-150 shadow-md">
+    {{-- Menu --}}
+    <div class="flex flex-row gap-8 items-center">
+        <a class="text-xl text-white font-bold" href="{{ route('home.index') }}" wire:navigate>Portfolio CMS</a>
 
-        {{-- Hamburger button --}}
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        {{-- Menu list --}}
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <x-nav-item :active="request()->routeIs('projects.*')" :href="route('projects.index')">Projects</x-nav-item>
-            </ul>
+        <div class="flex flex-row gap-2">
+            <x-nav-item :active="request()->routeIs('projects.*')" :href="route('projects.index')">Projects</x-nav-item>
+            <x-nav-item>Curriculum Vitae</x-nav-item>
         </div>
-
-        {{-- Logout button --}}
-        <livewire:auth.logout-button />
     </div>
+
+    {{-- Log Out --}}
+    <livewire:auth.logout-button />
 </nav>
