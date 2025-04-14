@@ -5,9 +5,10 @@
         <tr>
             <th class="text-center" style="width: 10%">Actions</th>
             <th style="width: 2%"></th>
-            <th style="width: 30%">Title</th>
-            <th style="width: 25%">Stacks</th>
-            <th>Description</th>
+            <th style="width: 25%">Title</th>
+            <th style="width: 20%">Stacks</th>
+            <th style="width: 30%">Description</th>
+            <th>Last Updated</th>
         </tr>
     </thead>
 
@@ -61,6 +62,9 @@
 
                 {{-- Description --}}
                 <td>{{ $project->description }}</td>
+
+                {{-- Last Updated --}}
+                <td>{{ $project->updated_at->diffForHumans() }}</td>
             </tr>
         @empty
             <tr>
