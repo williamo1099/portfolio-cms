@@ -1,13 +1,11 @@
-{{--  --}}
-<div class="d-flex flex-column gap-2">
-    <h2 class="fw-bold">Hello!</h2>
+<div class="flex flex-col gap-3">
+    <h3 class="text-3xl font-bold">Hello!</h3>
 
-    <a href="https://williamoktavianus.dev" target="_blank" rel="noopener noreferrer">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Go to Portfolio</h5>
-                <p class="card-text">williamoktavianus.dev</p>
-            </div>
+    {{--  --}}
+    <a href="https://williamoktavianus.dev" target="_blank" rel="noopener noreferrer" class="block">
+        <div class="rounded-lg shadow-md transition bg-white text-gray-800 p-4 hover:bg-gray-100">
+            <h5 class="text-lg font-semibold">Go to Portfolio</h5>
+            <p>williamoktavianus.dev</p>
         </div>
     </a>
 </div>
