@@ -14,10 +14,12 @@ class Project extends Model
 
     protected $table = 'projects';
 
-    protected $fillable = ['type', 'title', 'description', 'stacks', 'image_path', 'is_active'];
+    protected $fillable = ['type', 'title', 'description', 'stacks', 'image_path'];
 
     /**
      * Convert stacks attribute to an array.
+     * 
+     * @return Attribute
      */
     protected function stacksArray(): Attribute
     {
@@ -28,6 +30,10 @@ class Project extends Model
 
     /**
      * Scope a query to only include projects of a given type.
+     * 
+     * @param Builder $query
+     * @param string $type
+     * @return void
      */
     #[Scope]
     protected function ofType(Builder $query, string $type = ''): void
