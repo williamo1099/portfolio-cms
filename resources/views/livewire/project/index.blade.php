@@ -1,15 +1,14 @@
-<div class="d-flex flex-column gap-2">
-    <div class="d-flex justify-content-between">
-        <h3 class="fw-bold">Projects</h3>
+<div class="flex flex-col gap-3">
+    <div class="flex flex-row justify-between">
+        <h3 class="text-3xl font-bold">Projects</h3>
 
-        <a wire:navigate href="{{ route('projects.create') }}" role="button" class="btn btn-primary text-white"><i
-                class="bi bi-plus"></i> Create
-            New
-            Project</a>
+        <a wire:navigate href="{{ route('projects.create') }}" role="button"
+            class="flex items-center gap-2 px-4 py-2 rounded text-white bg-accent cursor-pointer hover:bg-accent/80 transition"><i
+                class="bi bi-plus"></i> Create New Project</a>
     </div>
 
     {{-- Summary --}}
-    <div class="d-flex justify-content-start gap-3">
+    <div class="flex flex-row justify-start gap-3 mb-5">
         {{-- Professional --}}
         <x-summary-card title="Professional Projects" :text="$professionalCount" click="setTypeFilter('professional')"
             :active="$this->isActive('professional')" />
