@@ -1,11 +1,14 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/livewire-starter-kit",
+    "name": "williamo1099/portfolio-cms",
     "type": "project",
-    "description": "The official Laravel starter kit for Livewire.",
+    "description": "The content management system for my portfolio built using Laravel + Livewire + Tailwind.",
     "keywords": [
         "laravel",
-        "framework"
+        "livewire",
+        "tailwind",
+        "cms",
+        "portfolio"
     ],
     "license": "MIT",
     "require": {
