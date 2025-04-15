@@ -89,5 +89,5 @@
 </div>
 
 <div class="mt-4">
-    {{ $projects->links() }}
+    {{ $projects->links('vendor.pagination.simple-tailwind') }}
 </div>
