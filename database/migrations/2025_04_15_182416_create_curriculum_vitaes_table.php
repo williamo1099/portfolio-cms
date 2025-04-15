@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('curriculum_vitaes', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->boolean('is_active')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
