@@ -2,8 +2,8 @@
 
 @php
     $classes =
-        'w-xs rounded-lg shadow-md p-4 cursor-pointer transition ' .
-        ($active ? 'bg-primary text-white' : 'bg-white text-gray-800 hover:bg-gray-100');
+        'w-xs rounded-lg shadow-md p-4 cursor-pointer transition backdrop-blur ' .
+        ($active ? 'bg-primary text-white' : 'bg-white/80 text-gray-800 hover:bg-white');
 @endphp
 
 <div {{ $attributes->merge(['class' => $classes]) }} role="button"

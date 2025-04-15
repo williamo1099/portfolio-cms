@@ -3,7 +3,7 @@
         <h3 class="text-3xl font-bold">Projects</h3>
 
         <a wire:navigate href="{{ route('projects.create') }}" role="button"
-            class="flex items-center gap-2 px-4 py-2 rounded text-white bg-accent cursor-pointer hover:bg-accent/80 transition"><i
+            class="flex items-center gap-2 px-4 py-2 rounded text-white bg-accent/80 backdrop-blur cursor-pointer hover:bg-accent transition"><i
                 class="bi bi-plus"></i> Create New Project</a>
     </div>
 

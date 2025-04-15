@@ -1,8 +1,8 @@
 @props(['projects'])
 
-<div class="rounded border border-gray-200 bg-white backdrop-blur backdrop-saturate-150 overflow-hidden">
+<div class="rounded border border-gray-200 overflow-hidden">
     <table class="w-full text-sm text-left text-black">
-        <thead class="bg-primary/80 text-white uppercase text-xs">
+        <thead class="bg-primary/80 backdrop-blur backdrop-saturate-150 text-white uppercase text-xs">
             <tr>
                 <th class="text-center py-2 px-3 w-[10%]">Actions</th>
                 <th class="w-[2%]"></th>
@@ -15,20 +15,21 @@
 
         <tbody>
             @forelse ($projects as $project)
-                <tr class="{{ !$project->is_active ? 'bg-red-100 text-red-800' : 'hover:bg-gray-100' }}">
+                <tr
+                    class="backdrop-blur transition {{ !$project->is_active ? 'bg-red-100/80 text-red-800 hover:bg-red-100' : 'bg-white/80 hover:bg-gray-100' }}">
                     {{-- Actions --}}
                     <td>
                         <div class="flex flex-row justify-center items-center gap-2">
                             {{-- Edit --}}
                             <a href="{{ route('projects.update', $project) }}"
-                                class="items-center justify-center p-1.5 text-yellow-600 hover:text-yellow-800 rounded transition"
+                                class="justify-center p-2 text-white bg-yellow-500 rounded transition hover:bg-yellow-600"
                                 title="Edit">
                                 <i class="bi bi-pencil"></i>
                             </a>
 
                             {{-- Activate / Deactivate --}}
                             <button
-                                class="justify-center p-1.5 text-white rounded transition {{ $project->is_active ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700' }}"
+                                class="justify-center p-2 text-white rounded transition cursor-pointer {{ $project->is_active ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' }}"
                                 title="{{ $project->is_active ? 'Deactivate' : 'Activate' }}"
                                 wire:click="toggleProjectStatus({{ $project->id }})">
                                 <i class="bi bi-toggle-{{ $project->is_active ? 'off' : 'on' }}"></i>
@@ -36,7 +37,7 @@
 
                             {{-- Delete --}}
                             <button
-                                class="justify-center p-1.5 text-white bg-red-700 hover:bg-red-800 rounded transition"
+                                class="justify-center p-2 text-white bg-red-500 rounded cursor-pointer transition hover:bg-red-600"
                                 title="Delete" wire:click="deleteProject({{ $project->id }})">
                                 <i class="bi bi-trash"></i>
                             </button>
@@ -88,5 +89,5 @@
 </div>
 
 <div class="mt-4">
-    {{ $projects->links('pagination::bootstrap-5') }}
+    {{ $projects->links() }}
 </div>

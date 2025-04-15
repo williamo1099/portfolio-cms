@@ -15,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body style="background-image: url('{{ asset('images/background.jpg') }}');" class="bg-cover bg-center min-h-screen">
     {{-- Navigation bar --}}
     <x-navbar />
 
