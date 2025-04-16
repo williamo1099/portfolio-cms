@@ -3,9 +3,20 @@
 namespace App\Services;
 
 use App\Models\CurriculumVitae;
+use Illuminate\Support\Collection;
 
 class CurriculumVitaeService
 {
+    /**
+     * Fetch curriculum vitaes.
+     * 
+     * @return Collection
+     */
+    public function getCurriculumVitaes(): Collection
+    {
+        return CurriculumVitae::latest()->take(10)->get();
+    }
+
     /**
      * Create a new curriculum vitae.
      * Before creating the new CV, deactivate all CVs.

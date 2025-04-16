@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-3 h-full">
     <h3 class="text-3xl font-bold">Curriculum Vitaes</h3>
 
-    <div class="flex flex-row justify-start items-center gap-5 p-4 bg-white/80 backdrop-blur h-1/2">
+    <div class="flex flex-row justify-start items-center gap-5 p-4 bg-white/80 backdrop-blur rounded-lg mb-5">
         {{-- Preview --}}
         <div class="flex flex-col gap-3 w-1/3">
             <h2 class="text-xl font-bold">Current Curriculum Vitae</h2>
@@ -21,4 +21,7 @@
                 type="submit">Save document</button>
         </form>
     </div>
+
+    {{-- List --}}
+    <x-curriculum-vitae.list :curriculumVitaes="$curriculumVitaes" />
 </div>
