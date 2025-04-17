@@ -7,8 +7,11 @@ use App\Models\CurriculumVitae;
 use App\Services\CurriculumVitaeService;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+
+#[Title('Curriculum Vitaes')]
 
 class Index extends Component
 {
