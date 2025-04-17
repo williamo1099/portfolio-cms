@@ -14,12 +14,14 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public string $title;
+    public array $breadcrumbs;
     public string $typeFilter = '';
 
     protected ProjectService $service;
 
     /**
-     * Boot the component and inject project service.
+     * Boot the component and inject properties.
      * 
      * @param ProjectService $service
      * @return void
@@ -28,6 +30,13 @@ class Index extends Component
     {
         // Initialize the service.
         $this->service = $service;
+
+        // Initialize page title and breadcrumbs.
+        $this->title = 'Projects';
+        $this->breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home.index')],
+            ['label' => 'Projects'],
+        ];
     }
 
     /**

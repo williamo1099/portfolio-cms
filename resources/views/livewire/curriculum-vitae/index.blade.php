@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-3 h-full">
-    <h3 class="text-3xl font-bold">Curriculum Vitaes</h3>
+    <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
     <x-card class="flex flex-row justify-start items-center gap-3">
         {{-- Preview --}}

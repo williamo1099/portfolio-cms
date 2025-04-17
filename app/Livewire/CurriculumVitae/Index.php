@@ -6,6 +6,7 @@ use App\Livewire\Forms\CurriculumVitaeForm;
 use App\Models\CurriculumVitae;
 use App\Services\CurriculumVitaeService;
 use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -17,22 +18,51 @@ class Index extends Component
 {
     use WithFileUploads;
 
+    public string $title;
+    public array $breadcrumbs;
+
     protected CurriculumVitaeService $service;
 
     public CurriculumVitaeForm $form;
 
-    public function boot(CurriculumVitaeService $service)
+    /**
+     * Boot the component and inject properties.
+     * 
+     * @param CurriculumVitaeService $service
+     * @return void
+     */
+    public function boot(CurriculumVitaeService $service): void
     {
+        // Initialize the service.
         $this->service = $service;
+
+        // Initialize page title and breadcrumbs.
+        $this->title = 'Curriculum Vitaes';
+        $this->breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home.index')],
+            ['label' => 'Curriculum Vitaes'],
+        ];
     }
 
-    public function mount()
+    /**
+     * Initialize the form with the given project data.
+     * 
+     * @param Project $project
+     * @return void
+     */
+    public function mount(): void
     {
         $curriculumVitae = CurriculumVitae::where("is_active", 1)->first();
         $this->form->setCurriculumVitae($curriculumVitae);
     }
 
-    public function render()
+    /**
+     * Render the curriculum vitae index view.
+     * This reuses the same view as the create form.
+     * 
+     * @return View
+     */
+    public function render(): View
     {
         try {
             $curriculumVitaes = $this->service->getCurriculumVitaes();
@@ -50,7 +80,9 @@ class Index extends Component
     }
 
     /**
+     * Handle the save submit button click event.
      * 
+     * @return void
      */
     public function save(): void
     {

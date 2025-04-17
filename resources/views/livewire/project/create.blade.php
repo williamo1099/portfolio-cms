@@ -1,11 +1,5 @@
 <div class="flex flex-col gap-4">
-    <h3 class="text-2xl font-bold">
-        @if ($form->id)
-            Update Project
-        @else
-            Create a New Project
-        @endif
-    </h3>
+    <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
     <x-card class="space-y-4">
         <form wire:submit.prevent="save">

@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-3">
-    <h3 class="text-3xl font-bold">Hello!</h3>
+    <x-page-header :title="$title" />
 
     {{--  --}}
     <a href="https://williamoktavianus.dev" target="_blank" rel="noopener noreferrer" class="block">
