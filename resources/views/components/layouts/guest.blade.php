@@ -9,14 +9,14 @@
     <title>Portfolio Management</title>
 
     {{-- Bootstrap --}}
-    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body style="background-image: url('{{ asset('images/background.jpg') }}');"
+    class="bg-cover bg-center flex flex-col min-h-screen">
+
     {{-- Content --}}
-    <div class="p-4">
-        {{ $slot }}
-    </div>
+    {{ $slot }}
 </body>
 
 </html>

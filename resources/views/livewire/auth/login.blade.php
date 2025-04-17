@@ -1,52 +1,54 @@
-<div class="min-vh-100 d-flex justify-content-center align-items-center">
-    <div class="card w-25">
-        <div class="card-body">
-            <h2 class="text-center mb-4">Login</h2>
+<div class="min-h-screen flex justify-center items-center bg-white/10 backdrop-blur">
+    <div class="flex flex-col gap-3 w-md p-6 bg-white/80 backdrop-blur rounded-lg border border-gray-200 shadow-md">
+        <h2 class="text-center text-3xl font-bold mb-5">Login to Portfolio CMS</h2>
 
-            {{-- Form --}}
-            <form wire:submit.prevent="login">
-                @error('authentication')
-                    <div class="alert alert-danger" role="alert">
-                        {{ $message }}
-                    </div>
+        {{-- Form --}}
+        <form wire:submit.prevent="login" class="space-y-4">
+            {{-- General Auth Error --}}
+            @error('authentication')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm">
+                    {{ $message }}
+                </div>
+            @enderror
+
+            {{-- Email --}}
+            <div>
+                <label for="email" class="block font-bold text-gray-700 mb-1">Email Address</label>
+                <input wire:model="form.email" type="email" id="email" name="email"
+                    class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                    required>
+
+                @error('form.email')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                 @enderror
+            </div>
 
-                {{-- Email --}}
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input wire:model="form.email" type="email" class="form-control" id="email" name="email"
-                        required>
+            {{-- Password --}}
+            <div>
+                <label for="password" class="block font-bold text-gray-700 mb-1">Password</label>
+                <input wire:model="form.password" type="password" id="password" name="password"
+                    class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                    required>
 
-                    @error('form.email')
-                        <small class="form-text text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
+                @error('form.password')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
-                {{-- Password --}}
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input wire:model="form.password" type="password" class="form-control" id="password"
-                        name="password" required>
+            {{-- Remember Me --}}
+            <div class="flex items-center gap-2">
+                <input wire:model="form.remember" type="checkbox" id="remember"
+                    class="form-checkbox text-blue-600 rounded cursor-pointer">
+                <label for="remember" class="text-gray-700 cursor-pointer">Remember me?</label>
+            </div>
 
-                    @error('form.password')
-                        <small class="form-text text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                {{-- Remember Me --}}
-                <div class="mb-3">
-                    <input wire:model="form.remember" type="checkbox" class="form-check-input" id="remember"
-                        name="password">
-                    <label class="form-check-label" for="remember">
-                        Remember me?
-                    </label>
-                </div>
-
-                {{-- Button --}}
-                <div class="mb-3 text-center">
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
-                </div>
-            </form>
-        </div>
+            {{-- Submit Button --}}
+            <div>
+                <button type="submit"
+                    class="w-full px-4 py-2 bg-primary/80 text-white font-semibold cursor-pointer rounded hover:bg-primary transition">
+                    Login
+                </button>
+            </div>
+        </form>
     </div>
 </div>

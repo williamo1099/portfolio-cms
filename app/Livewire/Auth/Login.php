@@ -38,6 +38,6 @@ class Login extends Component
             return;
         }
 
-        redirect()->intended('home.index');
+        redirect()->intended('/');
     }
 }
