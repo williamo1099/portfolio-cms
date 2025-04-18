@@ -23,5 +23,5 @@
     </x-card>
 
     {{-- List --}}
-    <x-curriculum-vitae.list :curriculumVitaes="$curriculumVitaes" />
+    <x-curriculum-vitae.table :curriculumVitaes="$curriculumVitaes" />
 </div>
