@@ -20,6 +20,16 @@ class CurriculumVitaeService
             ->get();
     }
 
+    /** 
+     * Fetch currently active curriculum vitae.
+     * 
+     * @return CurriculumVitae
+     */
+    public function getActiveCurriculumVitae(): CurriculumVitae
+    {
+        return CurriculumVitae::where('is_active', true)->first();
+    }
+
     /**
      * Create a new curriculum vitae.
      * Before creating the new CV, deactivate all CVs.
