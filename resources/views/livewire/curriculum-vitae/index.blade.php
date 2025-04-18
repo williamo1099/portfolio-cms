@@ -1,11 +1,13 @@
 <div class="flex flex-col gap-3 h-full">
     <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
-    <x-card class="flex flex-row justify-start items-center gap-3">
+    <x-card class="flex flex-row justify-start items-center gap-3 mb-5">
         {{-- Preview --}}
         <div class="flex flex-col gap-3 w-1/3">
             <h2 class="text-xl font-bold">Current Curriculum Vitae</h2>
-            <embed src="{{ asset('storage/' . $form->document) }}" class="rounded border shadow" />
+            @if ($form->document)
+                <embed src="{{ asset('storage/' . $form->document) }}" class="rounded border shadow" />
+            @endif
         </div>
 
         {{-- Form Submit --}}

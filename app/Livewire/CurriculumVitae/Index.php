@@ -88,4 +88,45 @@ class Index extends Component
     {
         $this->form->store();
     }
+
+    /**
+     * Set the status of the CV to active by its id.
+     * 
+     * @param int $curriculumVitaeId
+     * @return bool
+     */
+    public function activateCurriculumVitae(int $curriculumVitaeId): bool
+    {
+        try {
+            $project = $this->service->setCurriculumVitaeStatusToActive($curriculumVitaeId);
+            return $project instanceof CurriculumVitae;
+        } catch (Exception $ex) {
+            Log::error('Error activating curriculum vitae', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString(),
+            ]);
+            return false;
+        }
+    }
+
+    /**
+     * Delete the CV by its id.
+     * Delegates the operation to the CV service.
+     * 
+     * @param int $curriculumVitaeId
+     * @return bool
+     */
+    public function deleteCurriculumVitae(int $curriculumVitaeId): bool
+    {
+        try {
+            $curriculumVitae = $this->service->deleteCurriculumVitae($curriculumVitaeId);
+            return $curriculumVitae instanceof CurriculumVitae;
+        } catch (Exception $ex) {
+            Log::error('Error deleting curriculum vitae', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString(),
+            ]);
+            return false;
+        }
+    }
 }

@@ -14,7 +14,10 @@ class CurriculumVitaeService
      */
     public function getCurriculumVitaes(): Collection
     {
-        return CurriculumVitae::latest()->take(10)->get();
+        return CurriculumVitae::orderByDesc('is_active')
+            ->latest()
+            ->take(5)
+            ->get();
     }
 
     /**

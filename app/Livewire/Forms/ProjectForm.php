@@ -32,6 +32,8 @@ class ProjectForm extends Form
 
     /**
      * Set current project (for update form).
+     * 
+     * @param Project $project
      */
     public function setProject(Project $project)
     {
@@ -46,6 +48,8 @@ class ProjectForm extends Form
     /**
      * Store a new project.
      * Delegates the operation to the project service.
+     * 
+     * @return bool
      */
     public function store(): bool
     {
@@ -71,6 +75,8 @@ class ProjectForm extends Form
     /**
      * Update an existing project.
      * Delegates the operation to the project service.
+     * 
+     * @return bool
      */
     public function update(): bool
     {

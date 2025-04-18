@@ -75,7 +75,7 @@ class Index extends Component
      * @param string $type
      * @return bool
      */
-    public function isActive($type): bool
+    public function isActive(string $type): bool
     {
         return $this->typeFilter === $type;
     }
@@ -87,7 +87,7 @@ class Index extends Component
      * @param string $type
      * @return void
      */
-    public function setTypeFilter($type): void
+    public function setTypeFilter(string $type): void
     {
         if ($type == $this->typeFilter) {
             $this->typeFilter = '';
@@ -104,7 +104,7 @@ class Index extends Component
      * @param int $projectId
      * @return bool
      */
-    public function toggleProjectStatus($projectId): bool
+    public function toggleProjectStatus(int $projectId): bool
     {
         try {
             $project = $this->service->toggleProjectStatus($projectId);
@@ -125,7 +125,7 @@ class Index extends Component
      * @param int $projectId
      * @return bool
      */
-    public function deleteProject($projectId): bool
+    public function deleteProject(int $projectId): bool
     {
         try {
             $project = $this->service->deleteProject($projectId);
