@@ -3,13 +3,15 @@
 namespace App\Livewire\Forms;
 
 use Exception;
+use HasLogging;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class LoginForm extends Form
 {
+    use HasLogging;
+
     #[Validate(['required', 'email'])]
     public string $email = '';
 
@@ -40,7 +42,7 @@ class LoginForm extends Form
 
             return false;
         } catch (Exception $ex) {
-            Log::error($ex);
+            $this->logException('authenticating user', $ex);
             return false;
         }
     }

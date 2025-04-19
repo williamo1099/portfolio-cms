@@ -6,8 +6,8 @@ use App\Livewire\Forms\CurriculumVitaeForm;
 use App\Models\CurriculumVitae;
 use App\Services\CurriculumVitaeService;
 use Exception;
+use HasLogging;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,7 +16,7 @@ use Livewire\WithFileUploads;
 
 class Index extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, HasLogging;
 
     public string $title;
     public array $breadcrumbs;
@@ -67,10 +67,8 @@ class Index extends Component
         try {
             $curriculumVitaes = $this->service->getCurriculumVitaes();
         } catch (Exception $ex) {
-            Log::error('Error fetching CVs', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
+            // Log exception.
+            $this->logException('fetching CVs', $ex);
 
             // Set fallback data.
             $curriculumVitaes = [];
@@ -103,10 +101,7 @@ class Index extends Component
             $this->setActiveCurriculumVitaePath($curriculumVitae->path);
             return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
-            Log::error('Error activating curriculum vitae', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
+            $this->logException('activating curriculum vitae', $ex);
             return false;
         }
     }
@@ -124,10 +119,7 @@ class Index extends Component
             $curriculumVitae = $this->service->deleteCurriculumVitae($curriculumVitaeId);
             return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
-            Log::error('Error deleting curriculum vitae', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
+            $this->logException('deleting curriculum vitae', $ex);
             return false;
         }
     }
@@ -147,10 +139,8 @@ class Index extends Component
                 $path = $curriculumVitae?->path ?? '';
             }
         } catch (Exception $ex) {
-            Log::error('Error fetching active CV', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
+            // Log exception.
+            $this->logException('fetching active curriculum vitae', $ex);
 
             // Set fallback data.
             $path = '';

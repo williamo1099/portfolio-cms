@@ -4,13 +4,15 @@ namespace App\Livewire\Forms;
 
 use App\Models\CurriculumVitae;
 use Exception;
-use Illuminate\Support\Facades\Log;
+use HasLogging;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class CurriculumVitaeForm extends Form
 {
+    use HasLogging;
+
     #[Validate('file|mimes:pdf')]
     public $document;
 
@@ -40,10 +42,7 @@ class CurriculumVitaeForm extends Form
             $curriculumVitae = app(\App\Services\CurriculumVitaeService::class)->createCurriculumVitae($validated);
             return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
-            Log::error('Error creating curriculum vitae', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString()
-            ]);
+            $this->logException('creating curriculum vitae', $ex);
             return false;
         }
     }

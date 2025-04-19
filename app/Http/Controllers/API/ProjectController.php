@@ -5,14 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
 use App\Services\ProjectService;
-use App\Traits\APIResponse;
+use App\Traits\HasAPIResponse;
 use Exception;
+use HasLogging;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
-    use APIResponse;
+    use HasAPIResponse, HasLogging;
 
     protected ProjectService $service;
 
@@ -33,10 +33,7 @@ class ProjectController extends Controller
             $projects = $this->service->getProjects($type);
             return $this->success(ProjectResource::collection($projects), "Projects fetched successfully!");
         } catch (Exception $ex) {
-            Log::error('Error fetching projects', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
+            $this->logException('fetching projects', $ex);
             return $this->error("Failed to fetch projects!", 500, $ex->getMessage());
         }
     }

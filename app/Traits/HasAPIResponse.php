@@ -5,7 +5,7 @@ namespace App\Traits;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-trait APIResponse
+trait HasAPIResponse
 {
     /**
      * Return a successful JSON response.

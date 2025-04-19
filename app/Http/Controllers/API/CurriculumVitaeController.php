@@ -4,14 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Services\CurriculumVitaeService;
-use App\Traits\APIResponse;
+use App\Traits\HasAPIResponse;
 use Exception;
+use HasLogging;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
 
 class CurriculumVitaeController extends Controller
 {
-    use APIResponse;
+    use HasAPIResponse, HasLogging;
 
     protected CurriculumVitaeService $service;
 
@@ -31,10 +31,7 @@ class CurriculumVitaeController extends Controller
             $curriculumVitae = $this->service->getActiveCurriculumVitae();
             return $this->success(['path' => $curriculumVitae->path], "Active curriculum vitae fetched successfully!");
         } catch (Exception $ex) {
-            Log::error('Error fetching curriculum vitae', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString(),
-            ]);
+            $this->logException('fetching curriculum vitae', $ex);
             return $this->error("Failed to fetch curriculum vitae!", 500, $ex->getMessage());
         }
     }

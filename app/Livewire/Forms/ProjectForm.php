@@ -4,14 +4,14 @@ namespace App\Livewire\Forms;
 
 use App\Models\Project;
 use Exception;
-use Illuminate\Support\Facades\Log;
+use HasLogging;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
 
 class ProjectForm extends Form
 {
-    use WithFileUploads;
+    use WithFileUploads, HasLogging;
 
     public ?int $id = null;
 
@@ -64,10 +64,7 @@ class ProjectForm extends Form
 
             return $project instanceof Project;
         } catch (Exception $ex) {
-            Log::error('Error creating project', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString()
-            ]);
+            $this->logException('creating project', $ex);
             return false;
         }
     }
@@ -91,10 +88,7 @@ class ProjectForm extends Form
 
             return $project instanceof Project;
         } catch (Exception $ex) {
-            Log::error('Error updating project', [
-                'message' => $ex->getMessage(),
-                'trace' => $ex->getTraceAsString()
-            ]);
+            $this->logException('updating project', $ex);
             return false;
         }
     }
