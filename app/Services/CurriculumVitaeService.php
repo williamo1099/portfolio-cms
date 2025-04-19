@@ -25,7 +25,7 @@ class CurriculumVitaeService
      * 
      * @return CurriculumVitae
      */
-    public function getActiveCurriculumVitae(): CurriculumVitae
+    public function getActiveCurriculumVitae(): ?CurriculumVitae
     {
         return CurriculumVitae::where('is_active', true)->first();
     }

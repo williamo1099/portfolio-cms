@@ -20,6 +20,7 @@ class Index extends Component
 
     public string $title;
     public array $breadcrumbs;
+    public string $activeCurriculumVitaePath;
 
     protected CurriculumVitaeService $service;
 
@@ -52,8 +53,7 @@ class Index extends Component
      */
     public function mount(): void
     {
-        $curriculumVitae = CurriculumVitae::where("is_active", 1)->first();
-        $this->form->setCurriculumVitae($curriculumVitae);
+        $this->setActiveCurriculumVitaePath();
     }
 
     /**
@@ -87,6 +87,7 @@ class Index extends Component
     public function updatedFormDocument(): void
     {
         $this->form->store();
+        $this->setActiveCurriculumVitaePath();
     }
 
     /**
@@ -98,8 +99,9 @@ class Index extends Component
     public function activateCurriculumVitae(int $curriculumVitaeId): bool
     {
         try {
-            $project = $this->service->setCurriculumVitaeStatusToActive($curriculumVitaeId);
-            return $project instanceof CurriculumVitae;
+            $curriculumVitae = $this->service->setCurriculumVitaeStatusToActive($curriculumVitaeId);
+            $this->setActiveCurriculumVitaePath($curriculumVitae->path);
+            return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
             Log::error('Error activating curriculum vitae', [
                 'message' => $ex->getMessage(),
@@ -128,5 +130,32 @@ class Index extends Component
             ]);
             return false;
         }
+    }
+
+    /** 
+     * Set currently active curriculum vitae path (for CV display).
+     * If path is not provided, get the active CV.
+     * 
+     * @param string|null $path
+     * @return void
+     */
+    private function setActiveCurriculumVitaePath(?string $path = null): void
+    {
+        try {
+            if (!$path) {
+                $curriculumVitae = $this->service->getActiveCurriculumVitae();
+                $path = $curriculumVitae?->path ?? '';
+            }
+        } catch (Exception $ex) {
+            Log::error('Error fetching active CV', [
+                'message' => $ex->getMessage(),
+                'trace' => $ex->getTraceAsString(),
+            ]);
+
+            // Set fallback data.
+            $path = '';
+        }
+
+        $this->activeCurriculumVitaePath = $path;
     }
 }

@@ -13,13 +13,12 @@
 
     {{-- Table --}}
     <div class="flex flex-row gap-5 h-[calc(80vh)]">
-        @if ($form->document)
-            <embed src="{{ asset('storage/' . $form->document) }}" class="rounded border shadow w-1/3" />
+        @if ($activeCurriculumVitaePath && $activeCurriculumVitaePath !== '')
+            <embed src="{{ asset('storage/' . $activeCurriculumVitaePath) }}" class="rounded border shadow w-1/3" />
         @else
-            <div
-                class="w-1/3 h-full flex items-center justify-center rounded border-2 border-dashed border-gray-400 text-gray-500 text-center">
-                <span>No document uploaded</span>
-            </div>
+            <x-card class="flex items-center justify-center w-1/3">
+                <span>No CV uploaded yet.</span>
+            </x-card>
         @endif
 
         <div class="grow">
