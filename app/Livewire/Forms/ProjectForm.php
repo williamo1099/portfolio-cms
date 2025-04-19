@@ -3,8 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Project;
+use App\Traits\HasLogging;
 use Exception;
-use HasLogging;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;

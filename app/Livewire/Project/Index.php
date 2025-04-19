@@ -4,8 +4,8 @@ namespace App\Livewire\Project;
 
 use App\Models\Project;
 use App\Services\ProjectService;
+use App\Traits\HasLogging;
 use Exception;
-use HasLogging;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;

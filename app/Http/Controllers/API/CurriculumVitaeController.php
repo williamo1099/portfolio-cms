@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Services\CurriculumVitaeService;
 use App\Traits\HasAPIResponse;
+use App\Traits\HasLogging;
 use Exception;
-use HasLogging;
 use Illuminate\Http\JsonResponse;
 
 class CurriculumVitaeController extends Controller

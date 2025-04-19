@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Forms;
 
+use App\Traits\HasLogging;
 use Exception;
-use HasLogging;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Form;

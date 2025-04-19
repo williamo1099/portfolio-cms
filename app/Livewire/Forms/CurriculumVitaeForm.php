@@ -3,8 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\CurriculumVitae;
+use App\Traits\HasLogging;
 use Exception;
-use HasLogging;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
