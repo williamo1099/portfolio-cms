@@ -1,29 +1,29 @@
 <div class="flex flex-col gap-3 h-full">
-    <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
+    <div class="flex flex-row items-center justify-between">
+        <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
-    <x-card class="flex flex-row justify-start items-center gap-3 mb-5">
-        {{-- Preview --}}
-        <div class="flex flex-col gap-3 w-1/3">
-            <h2 class="text-xl font-bold">Current Curriculum Vitae</h2>
-            @if ($form->document)
-                <embed src="{{ asset('storage/' . $form->document) }}" class="rounded border shadow" />
-            @endif
+        <div class="flex flex-row gap-3">
+            <label for="files"
+                class="flex items-center gap-2 px-4 py-2 bg-accent/80 text-white font-semibold rounded cursor-pointer hover:bg-accent transition h-fit">
+                <i class="bi bi-cloud-arrow-up"></i> Upload New CV
+            </label>
+            <input wire:model="form.document" type="file" id="files" class="hidden">
         </div>
+    </div>
 
-        {{-- Form Submit --}}
-        <form class="flex flex-col gap-3" wire:submit="save">
-            <input wire:model="form.document" type="file">
+    {{-- Table --}}
+    <div class="flex flex-row gap-5 h-[calc(80vh)]">
+        @if ($form->document)
+            <embed src="{{ asset('storage/' . $form->document) }}" class="rounded border shadow w-1/3" />
+        @else
+            <div
+                class="w-1/3 h-full flex items-center justify-center rounded border-2 border-dashed border-gray-400 text-gray-500 text-center">
+                <span>No document uploaded</span>
+            </div>
+        @endif
 
-            @error('form.document')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
-            <button
-                class="px-4 py-2 bg-green-500 text-white font-semibold rounded cursor-pointer hover:bg-green-600 transition"
-                type="submit">Save document</button>
-        </form>
-    </x-card>
-
-    {{-- List --}}
-    <x-curriculum-vitae.table :curriculumVitaes="$curriculumVitaes" />
+        <div class="grow">
+            <x-curriculum-vitae.table :curriculumVitaes="$curriculumVitaes" />
+        </div>
+    </div>
 </div>

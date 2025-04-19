@@ -80,11 +80,11 @@ class Index extends Component
     }
 
     /**
-     * Handle the save submit button click event.
+     * Store the document after it has been uploaded.
      * 
      * @return void
      */
-    public function save(): void
+    public function updatedFormDocument(): void
     {
         $this->form->store();
     }

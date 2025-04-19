@@ -1,9 +1,9 @@
 <div class="flex flex-col gap-3">
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-row items-center justify-between">
         <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
         <a wire:navigate href="{{ route('projects.create') }}" role="button"
-            class="flex items-center gap-2 px-4 py-2 rounded text-white bg-accent/80 backdrop-blur cursor-pointer hover:bg-accent transition"><i
+            class="flex items-center gap-2 px-4 py-2 rounded text-white bg-accent/80 backdrop-blur cursor-pointer hover:bg-accent transition h-fit"><i
                 class="bi bi-plus"></i> Create New Project</a>
     </div>
 
