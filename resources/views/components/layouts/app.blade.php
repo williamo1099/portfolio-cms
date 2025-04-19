@@ -24,6 +24,9 @@
     <div class="p-4 grow">
         {{ $slot }}
     </div>
+
+    {{-- Footer --}}
+    <x-footer />
 </body>
 
 </html>

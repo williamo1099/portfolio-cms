@@ -17,6 +17,9 @@
 
     {{-- Content --}}
     {{ $slot }}
+
+    {{-- Footer --}}
+    <x-footer />
 </body>
 
 </html>

@@ -12,7 +12,7 @@
     </div>
 
     {{-- Table --}}
-    <div class="flex flex-row gap-5 h-[calc(80vh)]">
+    <div class="flex flex-row gap-5 h-[calc(75vh)]">
         @if ($activeCurriculumVitaePath && $activeCurriculumVitaePath !== '')
             <embed src="{{ asset('storage/' . $activeCurriculumVitaePath) }}" class="rounded border shadow w-1/3" />
         @else
