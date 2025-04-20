@@ -1,51 +1,54 @@
-<div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
+<div class="min-h-screen flex justify-center items-center bg-white/10 backdrop-blur">
+    <div class="flex flex-col gap-3 w-md p-6 bg-white/80 backdrop-blur rounded-lg border border-gray-200 shadow-md">
+        <h2 class="text-center text-3xl font-bold mb-5">Login to Portfolio CMS</h2>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+        {{-- Form --}}
+        <form wire:submit.prevent="login" class="space-y-4">
+            {{-- General Auth Error --}}
+            @error('authentication')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm">
+                    {{ $message }}
+                </div>
+            @enderror
 
-    <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Email address')"
-            type="email"
-            required
-            autofocus
-            autocomplete="email"
-            placeholder="email@example.com"
-        />
+            {{-- Email --}}
+            <div>
+                <label for="email" class="block font-bold text-gray-700 mb-1">Email Address</label>
+                <input wire:model="form.email" type="email" id="email" name="email"
+                    class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                    required>
 
-        <!-- Password -->
-        <div class="relative">
-            <flux:input
-                wire:model="password"
-                :label="__('Password')"
-                type="password"
-                required
-                autocomplete="current-password"
-                :placeholder="__('Password')"
-            />
+                @error('form.email')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
-            @if (Route::has('password.request'))
-                <flux:link class="absolute end-0 top-0 text-sm" :href="route('password.request')" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </flux:link>
-            @endif
-        </div>
+            {{-- Password --}}
+            <div>
+                <label for="password" class="block font-bold text-gray-700 mb-1">Password</label>
+                <input wire:model="form.password" type="password" id="password" name="password"
+                    class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                    required>
 
-        <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" :label="__('Remember me')" />
+                @error('form.password')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
-        </div>
-    </form>
+            {{-- Remember Me --}}
+            <div class="flex items-center gap-2">
+                <input wire:model="form.remember" type="checkbox" id="remember"
+                    class="form-checkbox text-blue-600 rounded cursor-pointer">
+                <label for="remember" class="text-gray-700 cursor-pointer">Remember me?</label>
+            </div>
 
-    @if (Route::has('register'))
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
-            {{ __('Don\'t have an account?') }}
-            <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
-        </div>
-    @endif
+            {{-- Submit Button --}}
+            <div>
+                <button type="submit"
+                    class="w-full px-4 py-2 bg-primary/80 text-white font-semibold cursor-pointer rounded hover:bg-primary transition">
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
 </div>

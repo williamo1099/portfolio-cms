@@ -1,24 +1,15 @@
 <?php
 
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
-use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get("/login", App\Livewire\Auth\Login::class)->name("login");
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+    Route::get("/", App\Livewire\Home\Index::class)->name("home.index");
 
-    Route::get('settings/profile', Profile::class)->name('settings.profile');
-    Route::get('settings/password', Password::class)->name('settings.password');
-    Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+    Route::get("/projects", App\Livewire\Project\Index::class)->name("projects.index");
+    Route::get("/projects/create", App\Livewire\Project\Create::class)->name("projects.create");
+    Route::get("/projects/update/{project}", App\Livewire\Project\Update::class)->name("projects.update");
+
+    Route::get("/curriculum-vitaes", App\Livewire\CurriculumVitae\Index::class)->name("curriculum-vitaes.index");
 });
-
-require __DIR__.'/auth.php';

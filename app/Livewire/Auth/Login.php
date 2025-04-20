@@ -2,76 +2,42 @@
 
 namespace App\Livewire\Auth;
 
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
+use App\Livewire\Forms\LoginForm;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-#[Layout('components.layouts.auth')]
 class Login extends Component
 {
-    #[Validate('required|string|email')]
-    public string $email = '';
-
-    #[Validate('required|string')]
-    public string $password = '';
-
-    public bool $remember = false;
+    public LoginForm $form;
 
     /**
-     * Handle an incoming authentication request.
+     * Render the login form view using the guest layout.
+     * 
+     * @return View
+     */
+    #[Layout('components.layouts.guest')]
+    public function render(): View
+    {
+        return view('livewire.auth.login');
+    }
+
+    /**
+     * Attempt to authenticate the user using the provided credentials.
+     * On failure, adds an authentication error to the form.
+     * On success, redirects the user to their intended destination or the home page if none exists.
+     * 
+     * @return void
      */
     public function login(): void
     {
-        $this->validate();
+        $isLoggedIn = $this->form->login();
 
-        $this->ensureIsNotRateLimited();
-
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
-
-        RateLimiter::clear($this->throttleKey());
-        Session::regenerate();
-
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
-    }
-
-    /**
-     * Ensure the authentication request is not rate limited.
-     */
-    protected function ensureIsNotRateLimited(): void
-    {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!$isLoggedIn) {
+            $this->addError('authentication', 'The provided credentials do not match our records.');
             return;
         }
 
-        event(new Lockout(request()));
-
-        $seconds = RateLimiter::availableIn($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
-    }
-
-    /**
-     * Get the authentication rate limiting throttle key.
-     */
-    protected function throttleKey(): string
-    {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        redirect()->intended('/');
     }
 }
