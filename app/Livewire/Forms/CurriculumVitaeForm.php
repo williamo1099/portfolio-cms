@@ -35,16 +35,11 @@ class CurriculumVitaeForm extends Form
      */
     public function store(): bool
     {
-        try {
-            $validated = $this->validate();
-            $fileName = $this->getFileName($this->document->getClientOriginalName());
-            $validated['path'] = $this->document->storeAs('curriculum-vitaes', $fileName, 'public');
-            $curriculumVitae = app(\App\Services\CurriculumVitaeService::class)->createCurriculumVitae($validated);
-            return $curriculumVitae instanceof CurriculumVitae;
-        } catch (Exception $ex) {
-            $this->logException('creating curriculum vitae', $ex);
-            return false;
-        }
+        $validated = $this->validate();
+        $fileName = $this->getFileName($this->document->getClientOriginalName());
+        $validated['path'] = $this->document->storeAs('curriculum-vitaes', $fileName, 'public');
+        $curriculumVitae = app(\App\Services\CurriculumVitaeService::class)->createCurriculumVitae($validated);
+        return $curriculumVitae instanceof CurriculumVitae;
     }
 
     /**

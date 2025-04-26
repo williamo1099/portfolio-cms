@@ -11,8 +11,20 @@
         </div>
     </div>
 
+    @session('success')
+        <x-card class='w-full !bg-green-200/80 !text-green-800'>
+            {{ session('success') }}
+        </x-card>
+    @endsession
+
+    @session('error')
+        <x-card class='w-full !bg-red-200/80 !text-red-800'>
+            {{ session('error') }}
+        </x-card>
+    @endsession
+
     {{-- Table --}}
-    <div class="flex flex-row gap-5 h-[calc(75vh)]">
+    <div class="flex flex-row gap-5 h-[calc(70vh)]">
         @if ($activeCurriculumVitaePath && $activeCurriculumVitaePath !== '')
             <embed src="{{ asset('storage/' . $activeCurriculumVitaePath) }}" class="rounded border shadow w-1/3" />
         @else

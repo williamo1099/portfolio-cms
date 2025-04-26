@@ -84,8 +84,16 @@ class Index extends Component
      */
     public function updatedFormDocument(): void
     {
-        $this->form->store();
-        $this->setActiveCurriculumVitaePath();
+        try {
+            $success = $this->form->store();
+            if (!$success) throw new Exception('Failed to upload curriculum vitae!');
+
+            $this->setActiveCurriculumVitaePath();
+            session()->flash('success', 'Curriculum vitae uploaded successfully!');
+        } catch (Exception $ex) {
+            session()->flash('error', 'Failed to upload curriculum vitae!');
+            $this->logException('creating curriculum vitae', $ex);
+        }
     }
 
     /**
