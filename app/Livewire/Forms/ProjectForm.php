@@ -4,7 +4,6 @@ namespace App\Livewire\Forms;
 
 use App\Models\Project;
 use App\Traits\HasLogging;
-use Exception;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
@@ -53,20 +52,15 @@ class ProjectForm extends Form
      */
     public function store(): bool
     {
-        try {
-            $validated = $this->validate();
-            if ($this->image) {
-                $validated['image_path'] = $this->image->store('projects', 'public');
-            }
-
-            $project = app(\App\Services\ProjectService::class)->createProject($validated);
-            $this->reset();
-
-            return $project instanceof Project;
-        } catch (Exception $ex) {
-            $this->logException('creating project', $ex);
-            return false;
+        $validated = $this->validate();
+        if ($this->image) {
+            $validated['image_path'] = $this->image->store('projects', 'public');
         }
+
+        $project = app(\App\Services\ProjectService::class)->createProject($validated);
+        $this->reset();
+
+        return $project instanceof Project;
     }
 
     /**
@@ -77,19 +71,14 @@ class ProjectForm extends Form
      */
     public function update(): bool
     {
-        try {
-            $validated = $this->validate();
-            if ($this->image instanceof \Illuminate\Http\UploadedFile) {
-                $validated['image_path'] = $this->image->store('projects', 'public');
-            }
-
-            $project = app(\App\Services\ProjectService::class)->updateProject($this->id, $validated);
-            $this->reset();
-
-            return $project instanceof Project;
-        } catch (Exception $ex) {
-            $this->logException('updating project', $ex);
-            return false;
+        $validated = $this->validate();
+        if ($this->image instanceof \Illuminate\Http\UploadedFile) {
+            $validated['image_path'] = $this->image->store('projects', 'public');
         }
+
+        $project = app(\App\Services\ProjectService::class)->updateProject($this->id, $validated);
+        $this->reset();
+
+        return $project instanceof Project;
     }
 }

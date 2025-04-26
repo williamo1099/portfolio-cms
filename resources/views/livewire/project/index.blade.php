@@ -18,6 +18,12 @@
             :active="$this->isActive('personal')" />
     </div>
 
+    @session('success')
+        <x-card class='w-full !bg-green-200/80 !text-green-800'>
+            {{ session('success') }}
+        </x-card>
+    @endsession
+
     {{-- Table --}}
     <x-project.table :projects="$projects" />
 </div>

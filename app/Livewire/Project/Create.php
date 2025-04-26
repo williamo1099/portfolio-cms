@@ -3,6 +3,8 @@
 namespace App\Livewire\Project;
 
 use App\Livewire\Forms\ProjectForm;
+use App\Traits\HasLogging;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -12,7 +14,7 @@ use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, HasLogging;
 
     public string $title;
     public array $breadcrumbs;
@@ -52,7 +54,16 @@ class Create extends Component
      */
     public function save(): void
     {
-        $this->form->store();
-        redirect()->route('projects.index');
+        try {
+            $success = $this->form->store();
+            if (!$success)
+                throw new Exception("Failed to update project!");
+
+            session()->flash('success', 'Project created successfully!');
+            redirect()->route('projects.index');
+        } catch (Exception $ex) {
+            session()->flash('error', 'Failed to create project!');
+            $this->logException('creating project', $ex);
+        }
     }
 }

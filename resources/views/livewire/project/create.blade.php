@@ -1,6 +1,12 @@
 <div class="flex flex-col gap-4">
     <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
+    @session('error')
+        <x-card class='w-full !bg-red-200/80 !text-red-800'>
+            {{ session('error') }}
+        </x-card>
+    @endsession
+
     <x-card class="space-y-4">
         <form wire:submit.prevent="save">
             {{-- Hidden ID Field for Update --}}
