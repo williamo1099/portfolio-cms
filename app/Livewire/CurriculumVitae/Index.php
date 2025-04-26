@@ -107,8 +107,10 @@ class Index extends Component
         try {
             $curriculumVitae = $this->service->setCurriculumVitaeStatusToActive($curriculumVitaeId);
             $this->setActiveCurriculumVitaePath($curriculumVitae->path);
+            session()->flash('success', 'Curriculum vitae activated successfully!');
             return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
+            session()->flash('error', 'Failed to activate curriculum vitae!');
             $this->logException('activating curriculum vitae', $ex);
             return false;
         }
@@ -125,8 +127,10 @@ class Index extends Component
     {
         try {
             $curriculumVitae = $this->service->deleteCurriculumVitae($curriculumVitaeId);
+            session()->flash('success', 'Curriculum vitae deleted successfully!');
             return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
+            session()->flash('error', 'Failed to delete curriculum vitae!');
             $this->logException('deleting curriculum vitae', $ex);
             return false;
         }

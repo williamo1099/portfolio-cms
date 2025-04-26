@@ -108,8 +108,10 @@ class Index extends Component
     {
         try {
             $project = $this->service->toggleProjectStatus($projectId);
+            session()->flash('success', 'Project toggled successfully!');
             return $project instanceof Project;
         } catch (Exception $ex) {
+            session()->flash('error', 'Failed to toggle project!');
             $this->logException('toggling project status', $ex);
             return false;
         }
@@ -126,8 +128,10 @@ class Index extends Component
     {
         try {
             $project = $this->service->deleteProject($projectId);
+            session()->flash('success', 'Project deleted successfully!');
             return $project instanceof Project;
         } catch (Exception $ex) {
+            session()->flash('error', 'Failed to delete project!');
             $this->logException('deleting project', $ex);
             return false;
         }
