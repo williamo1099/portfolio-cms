@@ -19,9 +19,7 @@
     </div>
 
     @session('success')
-        <x-card class='w-full !bg-green-200/80 !text-green-800'>
-            {{ session('success') }}
-        </x-card>
+        <x-flash-alert type="success" />
     @endsession
 
     {{-- Table --}}

@@ -12,15 +12,11 @@
     </div>
 
     @session('success')
-        <x-card class='w-full !bg-green-200/80 !text-green-800'>
-            {{ session('success') }}
-        </x-card>
+        <x-flash-alert type="success" />
     @endsession
 
     @session('error')
-        <x-card class='w-full !bg-red-200/80 !text-red-800'>
-            {{ session('error') }}
-        </x-card>
+        <x-flash-alert type="error" />
     @endsession
 
     {{-- Table --}}

@@ -2,9 +2,7 @@
     <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
     @session('error')
-        <x-card class='w-full !bg-red-200/80 !text-red-800'>
-            {{ session('error') }}
-        </x-card>
+        <x-flash-alert type="error" />
     @endsession
 
     <x-card class="space-y-4">
