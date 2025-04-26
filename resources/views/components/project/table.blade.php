@@ -7,6 +7,7 @@
         ['name' => 'Title', 'class' => 'w-[25%]'],
         ['name' => 'Stacks', 'class' => 'w-[20%]'],
         ['name' => 'Description', 'class' => 'w-[30%]'],
+        ['name' => 'Image', 'class' => ''],
         ['name' => 'Last Updated', 'class' => ''],
     ];
 @endphp
@@ -69,6 +70,12 @@
 
             {{-- Description --}}
             <td class="py-2 px-3">{{ $project->description }}</td>
+
+            {{-- Image --}}
+            <td class="py-2 px-3">
+                <img src="{{ url($project->image_path) }}" alt="{{ $project->title . ' Image' }}"
+                    class="max-h-10 rounded">
+            </td>
 
             {{-- Last Updated --}}
             <td class="py-2 px-3 text-sm">
