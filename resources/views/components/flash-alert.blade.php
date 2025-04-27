@@ -14,5 +14,5 @@
 @endphp
 
 <x-card {{ $attributes->merge(['class' => $classes]) }}>
-    {{ session($type) }}
+    {{ $slot->isNotEmpty() ? $slot : session($type) }}
 </x-card>
