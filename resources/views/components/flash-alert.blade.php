@@ -10,8 +10,6 @@
         case 'success':
             $classes .= '!bg-green-200/80 !text-green-800';
             break;
-        default:
-            $classes .= '!bg-gray-200/80 !text-gray-800'; // Add a default case if necessary
     }
 @endphp
 
