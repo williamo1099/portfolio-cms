@@ -7,6 +7,7 @@ use App\Services\ProjectService;
 use App\Traits\HasLogging;
 use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -58,11 +59,10 @@ class Index extends Component
             $personalCount = $projectCounts['personal'] ?? 0;
         } catch (Exception $ex) {
             // Log exception.
-            $errorCode = $this->logException('fetching projects', $ex);
-            session()->flash('error', "Failed to fetch projects! (Error code : {$errorCode})");
+            $this->logException('fetching projects', $ex);
 
             // Set fallback data.
-            $projects = [];
+            $projects = new LengthAwarePaginator(collect(), 0, 5, 1, ['path' => request()->url()]);
             $professionalCount = 0;
             $personalCount = 0;
         }

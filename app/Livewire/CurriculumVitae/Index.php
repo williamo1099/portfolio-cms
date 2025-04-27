@@ -8,6 +8,7 @@ use App\Services\CurriculumVitaeService;
 use App\Traits\HasLogging;
 use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -68,11 +69,10 @@ class Index extends Component
             $curriculumVitaes = $this->service->getCurriculumVitaes();
         } catch (Exception $ex) {
             // Log exception.
-            $errorCode = $this->logException('fetching CVs', $ex);
-            session()->flash('error', "Failed to fetch curriculum vitaes! (Error code : {$errorCode})");
+            $this->logException('fetching CVs', $ex);
 
             // Set fallback data.
-            $curriculumVitaes = [];
+            $curriculumVitaes = new LengthAwarePaginator(collect(), 0, 5, 1, ['path' => request()->url()]);
         }
 
         return view('livewire.curriculum-vitae.index', compact('curriculumVitaes'));
