@@ -12,4 +12,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/projects/update/{project}", App\Livewire\Project\Update::class)->name("projects.update");
 
     Route::get("/curriculum-vitaes", App\Livewire\CurriculumVitae\Index::class)->name("curriculum-vitaes.index");
+
+    Route::get("/profile", App\Livewire\Profile\Index::class)->name("profile.index");
 });

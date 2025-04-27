@@ -9,6 +9,14 @@
         </div>
     </div>
 
-    {{-- Log Out --}}
-    <livewire:auth.logout-button />
+    <div class="flex flex-row gap-3">
+        {{-- Profile --}}
+        <a href="/profile" title="Log Out"
+            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition text-white cursor-pointer hover:bg-primary">
+            <i class="bi bi-person-circle"></i>
+        </a>
+
+        {{-- Log Out --}}
+        <livewire:auth.logout-button />
+    </div>
 </nav>
