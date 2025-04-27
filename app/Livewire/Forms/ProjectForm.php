@@ -3,14 +3,13 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Project;
-use App\Traits\HasLogging;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
 
 class ProjectForm extends Form
 {
-    use WithFileUploads, HasLogging;
+    use WithFileUploads;
 
     public ?int $id = null;
 

@@ -62,8 +62,8 @@ class Create extends Component
             session()->flash('success', 'Project created successfully!');
             redirect()->route('projects.index');
         } catch (Exception $ex) {
-            session()->flash('error', 'Failed to create project!');
-            $this->logException('creating project', $ex);
+            $errorCode = $this->logException('creating project', $ex);
+            session()->flash('error', "Failed to create project! (Error code : {$errorCode})");
         }
     }
 }

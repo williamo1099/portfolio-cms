@@ -58,7 +58,8 @@ class Index extends Component
             $personalCount = $projectCounts['personal'] ?? 0;
         } catch (Exception $ex) {
             // Log exception.
-            $this->logException('fetching projects', $ex);
+            $errorCode = $this->logException('fetching projects', $ex);
+            session()->flash('error', "Failed to fetch projects! (Error code : {$errorCode})");
 
             // Set fallback data.
             $projects = [];
@@ -111,8 +112,8 @@ class Index extends Component
             session()->flash('success', 'Project toggled successfully!');
             return $project instanceof Project;
         } catch (Exception $ex) {
-            session()->flash('error', 'Failed to toggle project!');
-            $this->logException('toggling project status', $ex);
+            $errorCode = $this->logException('toggling project status', $ex);
+            session()->flash('error', "Failed to toggle project! (Error code : {$errorCode})");
             return false;
         }
     }
@@ -131,8 +132,8 @@ class Index extends Component
             session()->flash('success', 'Project deleted successfully!');
             return $project instanceof Project;
         } catch (Exception $ex) {
-            session()->flash('error', 'Failed to delete project!');
-            $this->logException('deleting project', $ex);
+            $errorCode = $this->logException('deleting project', $ex);
+            session()->flash('error', "Failed to delete project! (Error code : {$errorCode})");
             return false;
         }
     }

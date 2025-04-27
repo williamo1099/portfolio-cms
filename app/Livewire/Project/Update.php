@@ -71,8 +71,8 @@ class Update extends Component
             session()->flash('success', 'Project updated successfully!');
             redirect()->route('projects.index');
         } catch (Exception $ex) {
-            session()->flash('error', 'Failed to update project!');
-            $this->logException('creating project', $ex);
+            $errorCode = $this->logException('creating project', $ex);
+            session()->flash('error', "Failed to update project! (Error code : {$errorCode})");
         }
     }
 }

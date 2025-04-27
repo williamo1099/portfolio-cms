@@ -68,7 +68,8 @@ class Index extends Component
             $curriculumVitaes = $this->service->getCurriculumVitaes();
         } catch (Exception $ex) {
             // Log exception.
-            $this->logException('fetching CVs', $ex);
+            $errorCode = $this->logException('fetching CVs', $ex);
+            session()->flash('error', "Failed to fetch curriculum vitaes! (Error code : {$errorCode})");
 
             // Set fallback data.
             $curriculumVitaes = [];
@@ -91,8 +92,8 @@ class Index extends Component
             $this->setActiveCurriculumVitaePath();
             session()->flash('success', 'Curriculum vitae uploaded successfully!');
         } catch (Exception $ex) {
-            session()->flash('error', 'Failed to upload curriculum vitae!');
-            $this->logException('creating curriculum vitae', $ex);
+            $errorCode = $this->logException('creating curriculum vitae', $ex);
+            session()->flash('error', "Failed to upload curriculum vitae! (Error code : {$errorCode})");
         }
     }
 
@@ -110,8 +111,8 @@ class Index extends Component
             session()->flash('success', 'Curriculum vitae activated successfully!');
             return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
-            session()->flash('error', 'Failed to activate curriculum vitae!');
-            $this->logException('activating curriculum vitae', $ex);
+            $errorCode = $this->logException('activating curriculum vitae', $ex);
+            session()->flash('error', "Failed to activate curriculum vitae! (Error code : {$errorCode})");
             return false;
         }
     }
@@ -130,8 +131,8 @@ class Index extends Component
             session()->flash('success', 'Curriculum vitae deleted successfully!');
             return $curriculumVitae instanceof CurriculumVitae;
         } catch (Exception $ex) {
-            session()->flash('error', 'Failed to delete curriculum vitae!');
-            $this->logException('deleting curriculum vitae', $ex);
+            $errorCode = $this->logException('deleting curriculum vitae', $ex);
+            session()->flash('error', "Failed to delete curriculum vitae! (Error code : {$errorCode})");
             return false;
         }
     }
@@ -151,8 +152,8 @@ class Index extends Component
                 $path = $curriculumVitae?->path ?? '';
             }
         } catch (Exception $ex) {
-            // Log exception.
-            $this->logException('fetching active curriculum vitae', $ex);
+            $errorCode = $this->logException('fetching active curriculum vitae', $ex);
+            session()->flash('error', "Failed to activate curriculum vitae! (Error code : {$errorCode})");
 
             // Set fallback data.
             $path = '';
