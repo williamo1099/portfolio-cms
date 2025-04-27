@@ -69,7 +69,8 @@ class Index extends Component
             $curriculumVitaes = $this->service->getCurriculumVitaes();
         } catch (Exception $ex) {
             // Log exception.
-            $this->logException('fetching CVs', $ex);
+            $errorCode = $this->logException('fetching CVs', $ex);
+            session()->flash('error', "Failed to fetch curriculum vitaes! (Error code : {$errorCode})");
 
             // Set fallback data.
             $curriculumVitaes = new LengthAwarePaginator(collect(), 0, 5, 1, ['path' => request()->url()]);

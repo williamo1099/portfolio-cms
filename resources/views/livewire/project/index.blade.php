@@ -18,9 +18,12 @@
             :active="$this->isActive('personal')" />
     </div>
 
-    @session('success')
-        <x-flash-alert type="success" />
-    @endsession
+    {{-- Flash alert --}}
+    @foreach (['success', 'error'] as $type)
+        @if (session($type))
+            <x-flash-alert :type="$type">{{ session($type) }}</x-flash-alert>
+        @endif
+    @endforeach
 
     {{-- Table --}}
     <x-project.table :projects="$projects" />

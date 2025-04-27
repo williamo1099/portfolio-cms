@@ -59,7 +59,8 @@ class Index extends Component
             $personalCount = $projectCounts['personal'] ?? 0;
         } catch (Exception $ex) {
             // Log exception.
-            $this->logException('fetching projects', $ex);
+            $errorCode = $this->logException('fetching projects', $ex);
+            session()->flash('error', "Failed to fetch projects! (Error code : {$errorCode})");
 
             // Set fallback data.
             $projects = new LengthAwarePaginator(collect(), 0, 5, 1, ['path' => request()->url()]);

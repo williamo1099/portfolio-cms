@@ -11,13 +11,12 @@
         </div>
     </div>
 
-    @session('success')
-        <x-flash-alert type="success" />
-    @endsession
-
-    @session('error')
-        <x-flash-alert type="error" />
-    @endsession
+    {{-- Flash alert --}}
+    @foreach (['success', 'error'] as $type)
+        @if (session($type))
+            <x-flash-alert :type="$type">{{ session($type) }}</x-flash-alert>
+        @endif
+    @endforeach
 
     {{-- Table --}}
     <div class="flex flex-row gap-5 h-[calc(70vh)]">

@@ -1,9 +1,12 @@
 <div class="flex flex-col gap-4">
     <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
-    @session('error')
-        <x-flash-alert type="error" />
-    @endsession
+    {{-- Flash alert --}}
+    @foreach (['success', 'error'] as $type)
+        @if (session($type))
+            <x-flash-alert :type="$type">{{ session($type) }}</x-flash-alert>
+        @endif
+    @endforeach
 
     <x-card class="space-y-4">
         <form wire:submit.prevent="save">
