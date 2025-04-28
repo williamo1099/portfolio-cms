@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\ValidationFieldException;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class ProfileService
         // If password data exists, it means user is changing password.
         if (array_key_exists('password', $data)) {
             if (!Hash::check($data['password'], $user->password)) {
-                throw new Exception('Invalid password!');
+                throw new ValidationFieldException('password', 'Invalid password!');
             }
 
             $user->password = bcrypt($data['newPassword']);

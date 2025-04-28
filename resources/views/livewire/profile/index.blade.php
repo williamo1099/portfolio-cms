@@ -39,6 +39,9 @@
                     class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-accent focus:border-accent"
                     placeholder="Enter your password">
                 <p class="text-sm text-gray-500 mt-1">Leave blank to keep your current password.</p>
+                @error('form.password')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             {{-- New Password --}}
@@ -48,6 +51,9 @@
                     class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-accent focus:border-accent"
                     placeholder="Enter your new password">
                 <p class="text-sm text-gray-500 mt-1">Leave blank to keep your current password.</p>
+                @error('form.newPassword')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             {{-- Re-enter New Password --}}
@@ -59,6 +65,9 @@
                     class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-accent focus:border-accent"
                     placeholder="Re-enter your new password">
                 <p class="text-sm text-gray-500 mt-1">Leave blank to keep your current password.</p>
+                @error('form.newPasswordConfirmation')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             {{-- Submit Button --}}

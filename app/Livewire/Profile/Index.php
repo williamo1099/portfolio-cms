@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Profile;
 
+use App\Exceptions\ValidationFieldException;
 use App\Livewire\Forms\ProfileForm;
 use App\Traits\HasLogging;
 use Exception;
@@ -65,9 +66,12 @@ class Index extends Component
         try {
             $success = $this->form->update();
             if (!$success)
-                throw new Exception("Failed to update profile!");
+                return;
 
             session()->flash('success', 'Profile updated successfully!');
+        } catch (ValidationFieldException $ex) {
+            // All validation field exception are handled by Form object.
+            return;
         } catch (Exception $ex) {
             $errorCode = $this->logException('updating profile', $ex);
             session()->flash('error', "Failed to update profile! (Error code : {$errorCode})");

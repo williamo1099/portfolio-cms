@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Exceptions\ValidationFieldException;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
@@ -63,8 +64,13 @@ class ProfileForm extends Form
      */
     public function update(): bool
     {
-        $validated = $this->validate();
-        $user = app(\App\Services\ProfileService::class)->updateProfile($validated);
-        return $user instanceof User;
+        try {
+            $validated = $this->validate();
+            $user = app(\App\Services\ProfileService::class)->updateProfile($validated);
+            return $user instanceof User;
+        } catch (ValidationFieldException $ex) {
+            $this->addError($ex->getField(), $ex->getMessage());
+            return false;
+        }
     }
 }
