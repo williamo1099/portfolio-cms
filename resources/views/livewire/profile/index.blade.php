@@ -35,7 +35,7 @@
             {{-- Password --}}
             <div>
                 <label for="input-password" class="block font-bold text-lg mb-1 text-gray-700">Password</label>
-                <input wire:model="form.password" type="pasword" id="input-password"
+                <input wire:model="form.password" type="password" id="input-password"
                     class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-accent focus:border-accent"
                     placeholder="Enter your password">
                 <p class="text-sm text-gray-500 mt-1">Leave blank to keep your current password.</p>

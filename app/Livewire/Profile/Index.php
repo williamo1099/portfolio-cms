@@ -3,6 +3,7 @@
 namespace App\Livewire\Profile;
 
 use App\Livewire\Forms\ProfileForm;
+use App\Traits\HasLogging;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Title;
@@ -12,6 +13,8 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    use HasLogging;
+
     public string $title;
     public array $breadcrumbs;
 
@@ -60,7 +63,11 @@ class Index extends Component
     public function save(): void
     {
         try {
-            // TODO: Add save logic here.
+            $success = $this->form->update();
+            if (!$success)
+                throw new Exception("Failed to update profile!");
+
+            session()->flash('success', 'Profile updated successfully!');
         } catch (Exception $ex) {
             $errorCode = $this->logException('updating profile', $ex);
             session()->flash('error', "Failed to update profile! (Error code : {$errorCode})");
