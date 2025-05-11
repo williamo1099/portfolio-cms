@@ -13,5 +13,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("/curriculum-vitaes", App\Livewire\CurriculumVitae\Index::class)->name("curriculum-vitaes.index");
 
+    Route::get("/mails", App\Livewire\Mail\Index::class)->name("mails.index");
+
     Route::get("/profile", App\Livewire\Profile\Index::class)->name("profile.index");
 });

@@ -4,8 +4,9 @@
         <a class="text-xl text-white font-bold" href="{{ route('home.index') }}" wire:navigate>Portfolio CMS</a>
 
         <div class="flex flex-row gap-2">
-            <x-nav-item :active="request()->routeIs('projects.*')" :href="route('projects.index')">Projects</x-nav-item>
             <x-nav-item :active="request()->routeIs('curriculum-vitaes.*')" :href="route('curriculum-vitaes.index')">Curriculum Vitae</x-nav-item>
+            <x-nav-item :active="request()->routeIs('projects.*')" :href="route('projects.index')">Projects</x-nav-item>
+            <x-nav-item :active="request()->routeIs('mails.*')" :href="route('mails.index')">Mails</x-nav-item>
         </div>
     </div>
 
