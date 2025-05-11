@@ -21,14 +21,14 @@
                         {{-- Notify --}}
                         <button
                             class="justify-center p-2 text-white rounded transition cursor-pointer bg-green-500 hover:bg-green-600"
-                            title="Notify">
+                            title="Notify" wire:click="notifyMail({{ $mail->id }})">
                             <i class="bi bi-envelope"></i>
                         </button>
 
                         {{-- Dismiss --}}
                         <button
                             class="justify-center p-2 text-white rounded transition cursor-pointer bg-red-500 hover:bg-red-600"
-                            title="Dismiss">
+                            title="Dismiss" wire:click="dismissMail({{ $mail->id }})">
                             <i class="bi bi-x-circle"></i>
                         </button>
                     @endif

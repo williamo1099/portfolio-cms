@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Mail;
+use Exception;
 
 class MailService
 {
@@ -40,6 +41,26 @@ class MailService
     public function createMail(array $data): Mail
     {
         return Mail::create($data);
+    }
+
+    /**
+     * Set the mail status.
+     * 
+     * @param int $mailId
+     * @param string $status
+     * @return Mail
+     */
+    public function setMailStatus(int $mailId, string $status): Mail
+    {
+        $allowedStatuses = ['unread', 'dismissed', 'notified'];
+        if (!in_array($status, $allowedStatuses)) {
+            throw new Exception('Status is unknown.');
+        }
+
+        $mail = Mail::findOrFail($mailId);
+        $mail->status = $status;
+        $mail->save();
+        return $mail;
     }
 
     /**

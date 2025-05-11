@@ -103,6 +103,47 @@ class Index extends Component
     }
 
     /**
+     * Set the mail status to notified.
+     * 
+     * @param int $mailId
+     * @return bool
+     */
+    public function notifyMail(int $mailId): bool
+    {
+        try {
+            $mail = $this->service->setMailStatus($mailId, "notified");
+
+            // TODO: Send mail to e-mail.
+
+            session()->flash('success', 'Mail notified successfully!');
+            return $mail instanceof Mail;
+        } catch (Exception $ex) {
+            $errorCode = $this->logException('deleting mail', $ex);
+            session()->flash('error', "Failed to notify mail! (Error code : {$errorCode})");
+            return false;
+        }
+    }
+
+    /**
+     * Set the mail status to dismissed.
+     * 
+     * @param int $mailId
+     * @return bool
+     */
+    public function dismissMail(int $mailId): bool
+    {
+        try {
+            $mail = $this->service->setMailStatus($mailId, "dismissed");
+            session()->flash('success', 'Mail dismissed successfully!');
+            return $mail instanceof Mail;
+        } catch (Exception $ex) {
+            $errorCode = $this->logException('deleting mail', $ex);
+            session()->flash('error', "Failed to dismiss mail! (Error code : {$errorCode})");
+            return false;
+        }
+    }
+
+    /**
      * Delete the mail by its id.
      * Delegates the operation to the mail service.
      * 
@@ -112,9 +153,9 @@ class Index extends Component
     public function deleteMail(int $mailId): bool
     {
         try {
-            $project = $this->service->deleteMail($mailId);
+            $mail = $this->service->deleteMail($mailId);
             session()->flash('success', 'Mail deleted successfully!');
-            return $project instanceof Mail;
+            return $mail instanceof Mail;
         } catch (Exception $ex) {
             $errorCode = $this->logException('deleting mail', $ex);
             session()->flash('error', "Failed to delete mail! (Error code : {$errorCode})");
