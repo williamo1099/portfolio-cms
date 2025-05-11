@@ -17,6 +17,28 @@
             {{-- Actions --}}
             <td class="py-2 px-3">
                 <div class="flex flex-row justify-center items-center gap-2">
+                    @if ($mail->status == 'unread')
+                        {{-- Notify --}}
+                        <button
+                            class="justify-center p-2 text-white rounded transition cursor-pointer bg-green-500 hover:bg-green-600"
+                            title="Notify">
+                            <i class="bi bi-envelope"></i>
+                        </button>
+
+                        {{-- Dismiss --}}
+                        <button
+                            class="justify-center p-2 text-white rounded transition cursor-pointer bg-red-500 hover:bg-red-600"
+                            title="Dismiss">
+                            <i class="bi bi-x-circle"></i>
+                        </button>
+                    @endif
+
+                    {{-- Delete --}}
+                    <button
+                        class="justify-center p-2 text-white bg-red-500 rounded cursor-pointer transition hover:bg-red-600"
+                        title="Delete" wire:click="deleteMail({{ $mail->id }})">
+                        <i class="bi bi-trash"></i>
+                    </button>
                 </div>
             </td>
 

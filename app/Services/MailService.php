@@ -41,4 +41,17 @@ class MailService
     {
         return Mail::create($data);
     }
+
+    /**
+     * Delete the mail (soft delete).
+     * 
+     * @param int $mailId
+     * @return Project
+     */
+    public function deleteMail(int $mailId): Mail
+    {
+        $project = Mail::findOrFail($mailId);
+        $project->delete();
+        return $project;
+    }
 }

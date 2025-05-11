@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Mail;
 
+use App\Models\Mail;
 use App\Services\MailService;
 use App\Traits\HasLogging;
 use Exception;
@@ -99,5 +100,25 @@ class Index extends Component
         }
 
         $this->statusFilter = $status;
+    }
+
+    /**
+     * Delete the mail by its id.
+     * Delegates the operation to the mail service.
+     * 
+     * @param int $mailId
+     * @return bool
+     */
+    public function deleteMail(int $mailId): bool
+    {
+        try {
+            $project = $this->service->deleteMail($mailId);
+            session()->flash('success', 'Mail deleted successfully!');
+            return $project instanceof Mail;
+        } catch (Exception $ex) {
+            $errorCode = $this->logException('deleting mail', $ex);
+            session()->flash('error', "Failed to delete mail! (Error code : {$errorCode})");
+            return false;
+        }
     }
 }
