@@ -74,10 +74,10 @@
             <div class="flex flex-row gap-3">
                 <button type="submit"
                     class="px-4 py-2 bg-green-500 text-white font-semibold rounded cursor-pointer hover:bg-green-600 transition">
-                    Update Project
+                    Update Profile
                 </button>
 
-                <a href="{{ route('projects.index') }}" type="button"
+                <a href="{{ route('home.index') }}" type="button"
                     class="px-4 py-2 bg-red-500 text-white font-semibold rounded cursor-pointer hover:bg-red-600 transition">
                     Cancel
                 </a>
