@@ -5,15 +5,12 @@
 
     {{-- Summary --}}
     <div class="flex flex-row justify-start gap-3 mb-5">
-        {{-- Unread --}}
-        <x-summary-card title="Unread Mails" :text="$unreadCount" click="setStatusFilter('unread')" :active="$this->isActive('unread')" />
+        {{-- Notified --}}
+        <x-summary-card title="Notified Mails" :text="$notifiedCount" click="setStatusFilter('notified')" :active="$this->isActive('notified')" />
 
         {{-- Dismissed --}}
         <x-summary-card title="Dismissed Mails" :text="$dismissedCount" click="setStatusFilter('dismissed')"
             :active="$this->isActive('dismissed')" />
-
-        {{-- Notified --}}
-        <x-summary-card title="Notified Mails" :text="$notifiedCount" click="setStatusFilter('notified')" :active="$this->isActive('notified')" />
     </div>
 
     {{-- Flash alert --}}

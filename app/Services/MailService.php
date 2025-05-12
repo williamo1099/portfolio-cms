@@ -15,6 +15,11 @@ class MailService
      */
     public function getMails(?string $status = '', ?int $perPage = null)
     {
+        $allowedStatuses = ['dismissed', 'notified'];
+        if (!in_array($status, $allowedStatuses)) {
+            $status = 'unread';
+        }
+
         $query = Mail::latest()->ofStatus($status);
         return $perPage ? $query->paginate($perPage) : $query->get();
     }
