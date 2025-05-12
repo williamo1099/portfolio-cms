@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Mail;
 
+use App\Mail\NotifiedMail;
 use App\Models\Mail;
 use App\Services\MailService;
 use App\Traits\HasLogging;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -114,11 +116,12 @@ class Index extends Component
             $mail = $this->service->setMailStatus($mailId, "notified");
 
             // TODO: Send mail to e-mail.
+            FacadesMail::to("williamoktavianus@icloud.com")->send(new NotifiedMail($mail));
 
             session()->flash('success', 'Mail notified successfully!');
             return $mail instanceof Mail;
         } catch (Exception $ex) {
-            $errorCode = $this->logException('deleting mail', $ex);
+            $errorCode = $this->logException('notifying mail', $ex);
             session()->flash('error', "Failed to notify mail! (Error code : {$errorCode})");
             return false;
         }
@@ -137,7 +140,7 @@ class Index extends Component
             session()->flash('success', 'Mail dismissed successfully!');
             return $mail instanceof Mail;
         } catch (Exception $ex) {
-            $errorCode = $this->logException('deleting mail', $ex);
+            $errorCode = $this->logException('dismissing mail', $ex);
             session()->flash('error', "Failed to dismiss mail! (Error code : {$errorCode})");
             return false;
         }
