@@ -2,9 +2,17 @@
     <div class="flex flex-row items-center justify-between">
         <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
-        <a wire:navigate href="{{ route('projects.create') }}" role="button"
-            class="flex items-center gap-2 px-4 py-2 rounded text-white bg-accent/80 backdrop-blur cursor-pointer hover:bg-accent transition h-fit"><i
-                class="bi bi-plus"></i> Create New Project</a>
+        <div class="flex flex-row gap-3">
+            {{-- Reorder projects --}}
+            <a wire:navigate href="{{ route('projects.reorder') }}" role="button"
+                class="flex items-center gap-2 px-4 py-2 rounded text-white bg-yellow-500/80 backdrop-blur cursor-pointer hover:bg-yellow-500 transition h-fit"><i
+                    class="bi bi-arrow-left-right"></i> Reorder Project</a>
+
+            {{-- Create new project --}}
+            <a wire:navigate href="{{ route('projects.create') }}" role="button"
+                class="flex items-center gap-2 px-4 py-2 rounded text-white bg-accent/80 backdrop-blur cursor-pointer hover:bg-accent transition h-fit"><i
+                    class="bi bi-plus"></i> Create New Project</a>
+        </div>
     </div>
 
     {{-- Summary --}}
