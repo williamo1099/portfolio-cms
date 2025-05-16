@@ -58,4 +58,12 @@ class Reorder extends Component
 
         return view('livewire.project.reorder', compact('projects'));
     }
+
+    /**
+     * Update project grid order.
+     */
+    public function updateProjectsOrder($projects)
+    {
+        // TODO: Add reordering logic here.
+    }
 }
