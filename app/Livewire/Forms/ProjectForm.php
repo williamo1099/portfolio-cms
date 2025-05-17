@@ -3,13 +3,14 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Project;
+use App\Traits\HasLogging;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
 
 class ProjectForm extends Form
 {
-    use WithFileUploads;
+    use WithFileUploads, HasLogging;
 
     public ?int $id = null;
 
@@ -52,8 +53,19 @@ class ProjectForm extends Form
     public function store(): bool
     {
         $validated = $this->validate();
-        if ($this->image) {
+        if ($this->image instanceof \Illuminate\Http\UploadedFile) {
+            // Logs upload new image.
+            $this->logInformation('Uploading new image on update', [
+                'originalName' => $this->image->getClientOriginalName(),
+                'mimeType' => $this->image->getClientMimeType(),
+            ]);
+
             $validated['image_path'] = $this->image->store('projects', 'public');
+
+            // Logs stored image.
+            $this->logInformation('Image stored on update', [
+                'storedPath' => $validated['image_path'],
+            ]);
         }
 
         $project = app(\App\Services\ProjectService::class)->createProject($validated);
@@ -72,7 +84,18 @@ class ProjectForm extends Form
     {
         $validated = $this->validate();
         if ($this->image instanceof \Illuminate\Http\UploadedFile) {
+            // Logs upload new image.
+            $this->logInformation('Uploading new image on update', [
+                'originalName' => $this->image->getClientOriginalName(),
+                'mimeType' => $this->image->getClientMimeType(),
+            ]);
+
             $validated['image_path'] = $this->image->store('projects', 'public');
+
+            // Logs stored image.
+            $this->logInformation('Image stored on update', [
+                'storedPath' => $validated['image_path'],
+            ]);
         }
 
         $project = app(\App\Services\ProjectService::class)->updateProject($this->id, $validated);

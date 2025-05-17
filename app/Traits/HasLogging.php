@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Log;
 trait HasLogging
 {
     /**
+     * Logs information.
+     * 
+     * @param string $contextMessage
+     * @param array $extras
+     * @return void
+     */
+    protected function logInformation(string $contextMessage = '', array $extras = []): void
+    {
+        Log::info("Information: $contextMessage", $extras);
+    }
+
+    /**
      * Logs exception as error, with error code.
      * 
      * @param string $contextMessage
@@ -17,7 +29,7 @@ trait HasLogging
     protected function logException(string $contextMessage = '', Exception $exception): string
     {
         $code = $this->generateCode('er', $contextMessage);
-        Log::error("Error {$code} $contextMessage", [
+        Log::error("Error {$code}: $contextMessage", [
             'message' => $exception->getMessage(),
             'trace' => $exception->getTraceAsString(),
         ]);
