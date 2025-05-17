@@ -72,9 +72,9 @@
             <td class="py-2 px-3">{{ $project->description }}</td>
 
             {{-- Image --}}
-            <td class="py-2 px-3">
-                <img src="{{ url($project->image_path) }}" alt="{{ $project->title . ' Image' }}"
-                    class="max-h-10 rounded">
+            <td class="py-2 px-3 flex justify-center items-center">
+                <img src="{{ $project->image_path ? asset('storage/' . $project->image_path) : asset('images/placeholder-img.jpg') }}"
+                    alt="{{ $project->title . ' Image' }}" class="max-h-10 rounded">
             </td>
 
             {{-- Last Updated --}}
