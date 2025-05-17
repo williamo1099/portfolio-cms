@@ -11,8 +11,15 @@
         </div>
     </div>
 
+    {{-- Flash alert --}}
+    @foreach (['success', 'error'] as $type)
+        @if (session($type))
+            <x-flash-alert :type="$type">{{ session($type) }}</x-flash-alert>
+        @endif
+    @endforeach
+
     {{-- Table --}}
-    <div class="flex flex-row gap-5 h-[calc(75vh)]">
+    <div class="flex flex-row gap-5 h-[calc(70vh)]">
         @if ($activeCurriculumVitaePath && $activeCurriculumVitaePath !== '')
             <embed src="{{ asset('storage/' . $activeCurriculumVitaePath) }}" class="rounded border shadow w-1/3" />
         @else

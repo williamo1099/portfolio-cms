@@ -10,7 +10,7 @@
 @endphp
 
 <x-table :headers="$headers">
-    @foreach ($curriculumVitaes as $curriculumVitae)
+    @forelse ($curriculumVitaes as $curriculumVitae)
         <tr class="backdrop-blur transition bg-white/80 hover:bg-gray-100">
             {{-- Actions --}}
             <td class="py-2 px-3">
@@ -56,5 +56,9 @@
             {{-- Uploaded --}}
             <td class="py-2 px-3">{{ $curriculumVitae->created_at->diffForHumans() }}</td>
         </tr>
-    @endforeach
+    @empty
+        <tr class="backdrop-blur transition bg-white/80 hover:bg-gray-100">
+            <td colspan="4" class="text-center py-4">No projects found.</td>
+        </tr>
+    @endforelse
 </x-table>

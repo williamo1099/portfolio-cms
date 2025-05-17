@@ -6,9 +6,7 @@
         <form wire:submit.prevent="login" class="space-y-4">
             {{-- General Auth Error --}}
             @error('authentication')
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm">
-                    {{ $message }}
-                </div>
+                <x-flash-alert type="error">{{ $message }}</x-flash-alert>
             @enderror
 
             {{-- Email --}}

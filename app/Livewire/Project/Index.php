@@ -7,6 +7,7 @@ use App\Services\ProjectService;
 use App\Traits\HasLogging;
 use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -58,10 +59,11 @@ class Index extends Component
             $personalCount = $projectCounts['personal'] ?? 0;
         } catch (Exception $ex) {
             // Log exception.
-            $this->logException('fetching projects', $ex);
+            $errorCode = $this->logException('fetching projects', $ex);
+            session()->flash('error', "Failed to fetch projects! (Error code : {$errorCode})");
 
             // Set fallback data.
-            $projects = [];
+            $projects = new LengthAwarePaginator(collect(), 0, 5, 1, ['path' => request()->url()]);
             $professionalCount = 0;
             $personalCount = 0;
         }
@@ -108,9 +110,11 @@ class Index extends Component
     {
         try {
             $project = $this->service->toggleProjectStatus($projectId);
+            session()->flash('success', 'Project toggled successfully!');
             return $project instanceof Project;
         } catch (Exception $ex) {
-            $this->logException('toggling project status', $ex);
+            $errorCode = $this->logException('toggling project status', $ex);
+            session()->flash('error', "Failed to toggle project! (Error code : {$errorCode})");
             return false;
         }
     }
@@ -126,9 +130,11 @@ class Index extends Component
     {
         try {
             $project = $this->service->deleteProject($projectId);
+            session()->flash('success', 'Project deleted successfully!');
             return $project instanceof Project;
         } catch (Exception $ex) {
-            $this->logException('deleting project', $ex);
+            $errorCode = $this->logException('deleting project', $ex);
+            session()->flash('error', "Failed to delete project! (Error code : {$errorCode})");
             return false;
         }
     }

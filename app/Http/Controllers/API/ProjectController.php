@@ -30,7 +30,7 @@ class ProjectController extends Controller
     public function getProjects(?string $type = ''): JsonResponse
     {
         try {
-            $projects = $this->service->getProjects($type);
+            $projects = $this->service->getProjectsInOrder($type);
             return $this->success(ProjectResource::collection($projects), "Projects fetched successfully!");
         } catch (Exception $ex) {
             $this->logException('fetching projects', $ex);

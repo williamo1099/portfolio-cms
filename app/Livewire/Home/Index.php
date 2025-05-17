@@ -10,6 +10,8 @@ class Index extends Component
 {
     public string $title;
 
+    public string $portfolioUrl = 'https://williamoktavianus.dev';
+
     /**
      * Boot the component and inject properties.
      * 

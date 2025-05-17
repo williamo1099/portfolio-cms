@@ -7,6 +7,7 @@
         ['name' => 'Title', 'class' => 'w-[25%]'],
         ['name' => 'Stacks', 'class' => 'w-[20%]'],
         ['name' => 'Description', 'class' => 'w-[30%]'],
+        ['name' => 'Image', 'class' => ''],
         ['name' => 'Last Updated', 'class' => ''],
     ];
 @endphp
@@ -70,14 +71,20 @@
             {{-- Description --}}
             <td class="py-2 px-3">{{ $project->description }}</td>
 
+            {{-- Image --}}
+            <td class="py-2 px-3">
+                <img src="{{ url($project->image_path) }}" alt="{{ $project->title . ' Image' }}"
+                    class="max-h-10 rounded">
+            </td>
+
             {{-- Last Updated --}}
             <td class="py-2 px-3 text-sm">
                 {{ $project->updated_at->diffForHumans() }}
             </td>
         </tr>
     @empty
-        <tr>
-            <td colspan="6" class="text-center py-4">No projects found.</td>
+        <tr class="backdrop-blur transition bg-white/80 hover:bg-gray-100">
+            <td colspan="7" class="text-center py-4">No projects found.</td>
         </tr>
     @endforelse
 </x-table>

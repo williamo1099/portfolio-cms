@@ -2,15 +2,12 @@
 
 namespace App\Livewire\Forms;
 
-use App\Traits\HasLogging;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class LoginForm extends Form
 {
-    use HasLogging;
 
     #[Validate(['required', 'email'])]
     public string $email = '';
@@ -28,22 +25,17 @@ class LoginForm extends Form
      */
     public function login(): bool
     {
-        try {
-            $this->validate();
-            $credentials = [
-                'email' => $this->email,
-                'password' => $this->password,
-            ];
+        $this->validate();
+        $credentials = [
+            'email' => $this->email,
+            'password' => $this->password,
+        ];
 
-            if (Auth::attempt($credentials, $this->remember)) {
-                session()->regenerate();
-                return true;
-            }
-
-            return false;
-        } catch (Exception $ex) {
-            $this->logException('authenticating user', $ex);
-            return false;
+        if (Auth::attempt($credentials, $this->remember)) {
+            session()->regenerate();
+            return true;
         }
+
+        return false;
     }
 }

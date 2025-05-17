@@ -3,16 +3,12 @@
 namespace App\Livewire\Forms;
 
 use App\Models\CurriculumVitae;
-use App\Traits\HasLogging;
-use Exception;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class CurriculumVitaeForm extends Form
 {
-    use HasLogging;
-
     #[Validate('file|mimes:pdf')]
     public $document;
 
@@ -35,16 +31,11 @@ class CurriculumVitaeForm extends Form
      */
     public function store(): bool
     {
-        try {
-            $validated = $this->validate();
-            $fileName = $this->getFileName($this->document->getClientOriginalName());
-            $validated['path'] = $this->document->storeAs('curriculum-vitaes', $fileName, 'public');
-            $curriculumVitae = app(\App\Services\CurriculumVitaeService::class)->createCurriculumVitae($validated);
-            return $curriculumVitae instanceof CurriculumVitae;
-        } catch (Exception $ex) {
-            $this->logException('creating curriculum vitae', $ex);
-            return false;
-        }
+        $validated = $this->validate();
+        $fileName = $this->getFileName($this->document->getClientOriginalName());
+        $validated['path'] = $this->document->storeAs('curriculum-vitaes', $fileName, 'public');
+        $curriculumVitae = app(\App\Services\CurriculumVitaeService::class)->createCurriculumVitae($validated);
+        return $curriculumVitae instanceof CurriculumVitae;
     }
 
     /**

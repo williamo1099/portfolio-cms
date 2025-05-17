@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Project;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ProjectService
 {
@@ -16,6 +18,18 @@ class ProjectService
     {
         $query = Project::latest()->ofType($type);
         return $perPage ? $query->paginate($perPage) : $query->get();
+    }
+
+    /**
+     * Fetch projects filtered by type in order of order.
+     * 
+     * @param ?string $type
+     * @return Collection
+     */
+    public function getProjectsInOrder(?string $type = ''): Collection
+    {
+        $query = Project::orderBy('order', 'DESC')->where('is_active', true)->ofType($type);
+        return $query->get();
     }
 
     /**
@@ -40,6 +54,8 @@ class ProjectService
     public function createProject(array $data): Project
     {
         $data['stacks'] = json_encode(array_map('trim', explode(',', $data['stacks'])));
+        $lastOrder = Project::where('type', $data['type'])->max('order') ?? 0;
+        $data['order'] = $lastOrder + 1;
         return Project::create($data);
     }
 
@@ -59,6 +75,35 @@ class ProjectService
     }
 
     /**
+     * Update the project order.
+     * 
+     * @param int $projectId
+     * @param int $newOrder
+     * @return Project
+     */
+    public function updateProjectOrder(int $projectId, int $newOrder): Project
+    {
+        $project = Project::findOrFail($projectId);
+        $project->order = $newOrder;
+        $project->save();
+        return $project;
+    }
+
+    /**
+     * Decrement all projects order after a specified order.
+     * 
+     * @param string $type
+     * @param int $order
+     * @return int
+     */
+    private function decrementProjectsOrderAfter(string $type, int $order): int
+    {
+        return Project::where('type', $type)
+            ->where('order', '>', $order)
+            ->decrement('order');
+    }
+
+    /**
      * Toggle the project active status.
      * 
      * @param int $projectId
@@ -66,10 +111,14 @@ class ProjectService
      */
     public function toggleProjectStatus(int $projectId): Project
     {
-        $project = Project::findOrFail($projectId);
-        $project->is_active = !$project->is_active;
-        $project->save();
-        return $project;
+        return DB::transaction(function () use ($projectId) {
+            $project = Project::findOrFail($projectId);
+            $this->decrementProjectsOrderAfter($project->type, $project->order);
+            $project->is_active = !$project->is_active;
+            $project->order = 0;
+            $project->save();
+            return $project;
+        });
     }
 
     /**
@@ -80,8 +129,13 @@ class ProjectService
      */
     public function deleteProject(int $projectId): Project
     {
-        $project = Project::findOrFail($projectId);
-        $project->delete();
-        return $project;
+        return DB::transaction(function () use ($projectId) {
+            $project = Project::findOrFail($projectId);
+            $this->decrementProjectsOrderAfter($project->type, $project->order);
+            $project->order = 0;
+            $project->save();
+            $project->delete();
+            return $project;
+        });
     }
 }
