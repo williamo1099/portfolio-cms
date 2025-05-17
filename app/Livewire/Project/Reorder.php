@@ -14,6 +14,7 @@ class Reorder extends Component
 
     public string $title;
     public array $breadcrumbs;
+    public string $typeFilter = 'professional';
 
     protected ProjectService $service;
 
@@ -46,7 +47,7 @@ class Reorder extends Component
     {
         try {
             //
-            $projects = $this->service->getProjects();
+            $projects = $this->service->getProjectsInOrder($this->typeFilter);
         } catch (Exception $ex) {
             // Log exception.
             $errorCode = $this->logException('fetching projects', $ex);
@@ -60,10 +61,48 @@ class Reorder extends Component
     }
 
     /**
-     * Update project grid order.
+     * Check if the given type is the currently active filter.
+     * 
+     * @param string $type
+     * @return bool
      */
-    public function updateProjectsOrder($projects)
+    public function isActive(string $type): bool
     {
-        // TODO: Add reordering logic here.
+        return $this->typeFilter === $type;
+    }
+
+    /**
+     * Update the current type filter.
+     * 
+     * @param string $type
+     * @return void
+     */
+    public function setTypeFilter(string $type): void
+    {
+        $this->typeFilter = $type;
+    }
+
+    /**
+     * Update project grid order.
+     * 
+     * @param array $projects
+     */
+    public function updateProjectsOrder(array $projects): bool
+    {
+        try {
+            $projectLength = count($projects);
+            foreach ($projects as $project) {
+                $projectId = $project['value'];
+                $newOrder = $projectLength - $project['order'] + 1;
+                $this->service->updateProjectOrder($projectId, $newOrder);
+            }
+
+            session()->flash('success', 'Project toggled successfully!');
+            return true;
+        } catch (Exception $ex) {
+            $errorCode = $this->logException('updating project order', $ex);
+            session()->flash('error', "Failed to update project order! (Error code : {$errorCode})");
+            return false;
+        }
     }
 }
