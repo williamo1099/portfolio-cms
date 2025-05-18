@@ -1,4 +1,4 @@
-<div class="min-h-screen w-full flex justify-center items-center bg-white/10 backdrop-blur">
+<div class="w-full flex justify-center items-center bg-white/10 backdrop-blur">
     <div
         class="flex flex-col gap-3 w-sm lg:w-md mx-5 lg:mx-0 p-6 bg-white/80 backdrop-blur rounded-lg border border-gray-200 shadow-md">
         <h2 class="text-center text-2xl font-semibold mb-5">Login to <span
