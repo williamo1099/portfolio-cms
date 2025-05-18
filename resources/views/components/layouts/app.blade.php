@@ -16,16 +16,18 @@
     @livewireStyles
 </head>
 
-<body style="background-image: url('{{ asset('images/background.jpg') }}');"
-    class="bg-cover bg-center flex flex-col min-h-screen">
+<body class="bg-cover bg-no-repeat bg-center flex flex-col min-h-screen text-base"
+    style="background-image: url('{{ asset('images/background.jpg') }}');">
 
     {{-- Navigation bar --}}
     <x-navbar />
 
     {{-- Content --}}
-    <div class="p-4 grow">
-        {{ $slot }}
-    </div>
+    <main class="flex grow">
+        <div class="p-4 w-screen">
+            {{ $slot }}
+        </div>
+    </main>
 
     {{-- Footer --}}
     <x-footer />
