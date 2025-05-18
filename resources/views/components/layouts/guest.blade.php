@@ -12,8 +12,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body style="background-image: url('{{ asset('images/background.jpg') }}');"
-    class="bg-cover bg-center flex flex-col min-h-screen">
+<body class="bg-cover bg-no-repeat bg-center flex flex-col min-h-screen text-base overflow-y-hidden"
+    style="background-image: url('{{ asset('images/background.jpg') }}');">
 
     {{-- Content --}}
     {{ $slot }}

@@ -13,6 +13,8 @@ class Login extends Component
 {
     use HasLogging;
 
+    public bool $showPassword = false;
+
     public LoginForm $form;
 
     /**
@@ -48,5 +50,15 @@ class Login extends Component
             $errorCode = $this->logException('authenticating user', $ex);
             session()->flash('error', "Failed to log in! (Error code : {$errorCode})");
         }
+    }
+
+    /**
+     * Toggle show password field status.
+     * 
+     * @return void
+     */
+    public function togglePassword(): void
+    {
+        $this->showPassword = !$this->showPassword;
     }
 }
