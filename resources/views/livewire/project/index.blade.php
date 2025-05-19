@@ -35,4 +35,5 @@
 
     {{-- Table --}}
     <x-project.table :projects="$projects" />
+    <x-project.list :projects="$projects" />
 </div>
