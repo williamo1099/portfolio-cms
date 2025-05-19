@@ -1,5 +1,5 @@
-<div class="flex flex-col gap-3">
-    <div class="flex flex-row items-center justify-between">
+<div class="flex flex-col gap-4">
+    <div class="flex flex-col lg:flex-row gap-3 items-start lg:items-center justify-between">
         <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
         <div class="flex flex-row gap-3">
@@ -16,7 +16,7 @@
     </div>
 
     {{-- Summary --}}
-    <div class="flex flex-row justify-start gap-3 mb-5">
+    <div class="hidden lg:flex flex-row justify-start gap-3">
         {{-- Professional --}}
         <x-summary-card title="Professional Projects" :text="$professionalCount" click="setTypeFilter('professional')"
             :active="$this->isActive('professional')" />
