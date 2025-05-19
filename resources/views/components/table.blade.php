@@ -1,6 +1,6 @@
 @props(['headers'])
 
-<div class="rounded border border-gray-200 overflow-hidden">
+<div class="rounded border border-gray-200 overflow-hidden hidden lg:block">
     <table class="w-full text-sm text-left text-black">
         <thead class="bg-primary/80 backdrop-blur backdrop-saturate-150 text-white uppercase text-xs">
             <tr>

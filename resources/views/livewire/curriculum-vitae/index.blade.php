@@ -31,6 +31,7 @@
 
         <div class="grow">
             <x-curriculum-vitae.table :curriculumVitaes="$curriculumVitaes" />
+            <x-curriculum-vitae.list :curriculumVitaes="$curriculumVitaes" />
         </div>
     </div>
 </div>
