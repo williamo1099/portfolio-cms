@@ -22,4 +22,5 @@
 
     {{-- Table --}}
     <x-mail.table :mails="$mails" />
+    <x-mail.list :mails="$mails" />
 </div>
