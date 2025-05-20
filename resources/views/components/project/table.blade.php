@@ -88,7 +88,3 @@
         </tr>
     @endforelse
 </x-table>
-
-<div class="mt-4">
-    {{ $projects->links('vendor.pagination.simple-tailwind') }}
-</div>

@@ -23,4 +23,9 @@
     {{-- Table --}}
     <x-mail.table :mails="$mails" />
     <x-mail.list :mails="$mails" />
+
+    {{-- Paignator --}}
+    <div>
+        {{ $mails->links('vendor.pagination.simple-tailwind') }}
+    </div>
 </div>

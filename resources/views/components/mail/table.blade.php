@@ -65,7 +65,3 @@
         </tr>
     @endforelse
 </x-table>
-
-<div class="mt-4">
-    {{ $mails->links('vendor.pagination.simple-tailwind') }}
-</div>

@@ -36,4 +36,9 @@
     {{-- Table --}}
     <x-project.table :projects="$projects" />
     <x-project.list :projects="$projects" />
+
+    {{-- Paginator --}}
+    <div>
+        {{ $projects->links('vendor.pagination.simple-tailwind') }}
+    </div>
 </div>
