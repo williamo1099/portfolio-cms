@@ -13,10 +13,7 @@
 
     <div class="flex flex-row gap-3">
         {{-- Profile --}}
-        <a href="/profile" title="Log Out"
-            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition text-white cursor-pointer hover:bg-primary">
-            <i class="bi bi-person-circle"></i>
-        </a>
+        <x-nav-item :active="request()->routeIs('profile.*')" :href="route('profile.index')"><i class="bi bi-person-circle"></i></x-nav-item>
 
         {{-- Log Out --}}
         <livewire:auth.logout-button />
@@ -53,9 +50,10 @@
                 <i class="bi bi-envelope"></i> Mails
             </x-nav-item>
 
-            <a href="/profile" class="text-white px-3 py-2 rounded hover:bg-primary flex items-center gap-2">
+            {{-- Profile --}}
+            <x-nav-item :active="request()->routeIs('profile.*')" :href="route('profile.index')">
                 <i class="bi bi-person-circle"></i> Profile
-            </a>
+            </x-nav-item>
 
             <livewire:auth.logout-button />
         </div>
