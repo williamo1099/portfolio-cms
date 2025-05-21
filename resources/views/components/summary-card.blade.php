@@ -2,7 +2,9 @@
 
 @php
     $classes =
-        'w-xs ' . ($active ? ' !bg-primary !text-white ' : ' hover:bg-white ') . ($click ? ' cursor-pointer ' : '');
+        'w-full lg:w-xs ' .
+        ($active ? ' !bg-primary !text-white ' : ' hover:bg-white ') .
+        ($click ? ' cursor-pointer ' : '');
 @endphp
 
 <div @if ($click) wire:click="{{ $click }}" @endif>

@@ -2,7 +2,7 @@
     <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
     {{-- Summary --}}
-    <div class="flex flex-row justify-start gap-3 mb-5">
+    <div class="flex flex-col lg:flex-row justify-start gap-3">
         {{-- Professional --}}
         <x-summary-card title="Professional Projects" text="" click="setTypeFilter('professional')"
             :active="$this->isActive('professional')" />
@@ -18,7 +18,7 @@
         @endif
     @endforeach
 
-    <div class="grid grid-cols-4 gap-4" wire:sortable="updateProjectsOrder">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4" wire:sortable="updateProjectsOrder">
         @foreach ($projects as $project)
             <civ class="cursor-move" wire:sortable.item="{{ $project->id }}" wire:key="project-{{ $project->id }}">
                 <x-project.reorder-card :project="$project"></x-project.reorder-card>
