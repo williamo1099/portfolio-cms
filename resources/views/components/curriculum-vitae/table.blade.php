@@ -58,7 +58,7 @@
         </tr>
     @empty
         <tr class="backdrop-blur transition bg-white/80 hover:bg-gray-100">
-            <td colspan="4" class="text-center py-4">No projects found.</td>
+            <td colspan="4" class="text-center py-4">No CVs found.</td>
         </tr>
     @endforelse
 </x-table>

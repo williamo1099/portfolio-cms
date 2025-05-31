@@ -4,7 +4,7 @@
     </div>
 
     {{-- Summary --}}
-    <div class="flex flex-row justify-start gap-3 mb-5">
+    <div class="hidden lg:flex flex-row justify-start gap-3 mb-5">
         {{-- Notified --}}
         <x-summary-card title="Notified Mails" :text="$notifiedCount" click="setStatusFilter('notified')" :active="$this->isActive('notified')" />
 
@@ -22,4 +22,10 @@
 
     {{-- Table --}}
     <x-mail.table :mails="$mails" />
+    <x-mail.list :mails="$mails" />
+
+    {{-- Paignator --}}
+    <div>
+        {{ $mails->links('vendor.pagination.simple-tailwind') }}
+    </div>
 </div>

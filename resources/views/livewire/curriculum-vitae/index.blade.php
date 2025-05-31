@@ -1,10 +1,10 @@
-<div class="flex flex-col gap-3 h-full">
-    <div class="flex flex-row items-center justify-between">
+<div class="flex flex-col gap-4 h-full">
+    <div class="flex flex-col lg:flex-row gap-3 items-start lg:items-center justify-between">
         <x-page-header :title="$title" :breadcrumbs="$breadcrumbs" />
 
         <div class="flex flex-row gap-3">
             <label for="files"
-                class="flex items-center gap-2 px-4 py-2 bg-accent/80 text-white font-semibold rounded cursor-pointer hover:bg-accent transition h-fit">
+                class="flex items-center gap-2 px-4 py-2 bg-accent/80 text-white font-semibold rounded cursor-pointer hover:bg-accent transition">
                 <i class="bi bi-cloud-arrow-up"></i> Upload New CV
             </label>
             <input wire:model="form.document" type="file" id="files" class="hidden">
@@ -21,15 +21,17 @@
     {{-- Table --}}
     <div class="flex flex-row gap-5 h-[calc(70vh)]">
         @if ($activeCurriculumVitaePath && $activeCurriculumVitaePath !== '')
-            <embed src="{{ asset('storage/' . $activeCurriculumVitaePath) }}" class="rounded border shadow w-1/3" />
+            <embed src="{{ asset('storage/' . $activeCurriculumVitaePath) }}"
+                class="rounded border shadow w-1/3 hidden lg:block" />
         @else
-            <x-card class="flex items-center justify-center w-1/3">
+            <x-card class="items-center justify-center w-1/3 hidden lg:flex">
                 <span>No CV uploaded yet.</span>
             </x-card>
         @endif
 
         <div class="grow">
             <x-curriculum-vitae.table :curriculumVitaes="$curriculumVitaes" />
+            <x-curriculum-vitae.list :curriculumVitaes="$curriculumVitaes" />
         </div>
     </div>
 </div>
