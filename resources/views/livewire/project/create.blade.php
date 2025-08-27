@@ -56,20 +56,20 @@
                 <p class="text-sm text-gray-500 mt-1">Separate stacks with commas (e.g. 'laravel, vue, tailwind')</p>
             </div>
 
-            {{-- Description --}}
-            <div>
-                <label for="input-description" class="block font-bold text-lg mb-1 text-gray-700">Description</label>
-                <textarea wire:model="form.description" id="input-description" rows="3"
-                    class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-accent focus:border-accent"
-                    placeholder="Enter description"></textarea>
-            </div>
-
             {{-- URL --}}
             <div>
                 <label for="input-url" class="block font-bold text-lg mb-1 text-gray-700">URL</label>
                 <input wire:model="form.url" type="text" id="input-url"
                     class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-accent focus:border-accent"
                     placeholder="Enter URL"></input>
+            </div>
+
+            {{-- Description --}}
+            <div>
+                <label for="input-description" class="block font-bold text-lg mb-1 text-gray-700">Description</label>
+                <textarea wire:model="form.description" id="input-description" rows="3"
+                    class="w-full border-gray-300 bg-white rounded-md shadow-sm px-4 py-2 focus:ring-accent focus:border-accent"
+                    placeholder="Enter description"></textarea>
             </div>
 
             {{-- Image --}}
