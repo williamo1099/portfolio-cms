@@ -26,6 +26,9 @@ class ProjectForm extends Form
     #[Validate(['nullable'])]
     public ?string $description = '';
 
+    #[Validate(['nullable'])]
+    public ?string $url = '';
+
     #[Validate('nullable', 'image', 'max:1024')]
     public $image;
 
@@ -41,6 +44,7 @@ class ProjectForm extends Form
         $this->title = $project->title;
         $this->stacks = implode(', ', json_decode($project->stacks, true));
         $this->description = $project->description;
+        $this->url = $project->url;
         $this->image = $project->image_path;
     }
 
